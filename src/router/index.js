@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainScreen from '../views/MainScreen'
 import SecondScreen from "@/views/SecondScreen";
+import ThirdScreen from "@/views/ThirdScreen";
 
 
 const routes = [
@@ -13,6 +14,11 @@ const routes = [
     path: '/halls',
     name: 'halls',
     component: SecondScreen
+  },
+  {
+    path: '/details',
+    name: 'details',
+    component: ThirdScreen
   },
 ]
 

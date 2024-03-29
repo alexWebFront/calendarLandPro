@@ -1,0 +1,23 @@
+.third-screen {
+
+  .top-content__button-back {
+    margin-left: auto;
+  }
+
+  &__content {
+    max-width: 1320px;
+    width: 100%;
+    margin: 0 auto;
+    height: 1720px;
+    overflow: auto;
+    border-radius: 15px;
+    background: rgb(39, 39, 58);
+    padding: 70px 55px;
+  }
+
+  &__container {
+    border: 1px solid black;
+
+    height: 100%;
+  }
+}
