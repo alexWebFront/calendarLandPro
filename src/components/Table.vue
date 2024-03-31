@@ -2,15 +2,20 @@
   <div class="table">
     <div class="table__head">
       <div class="table__head-container">
-        <div class="table__head-item" v-for="item in headList">
+        <div v-if="getTableHeadContent" class="table__head-item" v-for="item in transformedArr">
           <div class="table__head-item-img">
             <img src="../assets/images/calendar.svg" alt="">
           </div>
-          <div class="table__head-item-text">{{ item.text }}</div>
+          <div class="table__head-item-text">{{ item.date }}</div>
+        </div>
+        <div v-if="!getTableHeadContent" class="table__head-item" v-for="item in hallsInfo">
+          <div class="table__head-item-img">
+            <img src="../assets/images/hall.svg" alt="">
+          </div>
+          <div class="table__head-item-text">{{ item.name }}</div>
         </div>
       </div>
     </div>
-
     <div :class="['table__item table__item-abs', {'is-abs':getAbsClass}]">
       <div class="table__absolute-hall">
         <!--        <div class="table__absolute-hall-column"></div>-->
@@ -22,7 +27,6 @@
         <div class="table__item-column" v-for="i in 3"></div>
       </div>
     </div>
-
     <div class="table__item" v-for="item in timeList">
       <div class="table__item-time">{{ item.firstRange }}</div>
       <div class="table__item-column-container">
@@ -39,6 +43,7 @@
 
 <script>
 import TableCard from "@/components/TableCard";
+import {mapGetters} from "vuex";
 
 export default {
   components: {TableCard},
@@ -58,17 +63,33 @@ export default {
     cardLink: {
       type: String,
       default: ''
+    },
+    transformedArr: {
+      type: Array,
+      default: []
     }
   },
   data() {
     return {
-      title: "А/В тесты и рекламная монетизация"
+      title: "А/В тесты и рекламная монетизация",
+      hallList: [],
     }
   },
   created() {
-    console.log(this.$route.path)
+    // this.getTransformedArr()
+    // console.log(this.$route.path)
   },
+  computed: {
+    ...mapGetters(["campInfo", "hallsInfo"]),
 
+    getTableHeadContent() {
+      return this.$route.path === '/'
+    },
+
+    getTableHeadArr() {
+      return this.$route.path === '/' ? this.headList : this.hallList
+    }
+  },
   methods: {},
 }
 </script>

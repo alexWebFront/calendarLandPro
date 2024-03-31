@@ -1,8 +1,21 @@
 <template>
   <div class="page">
     <div class="second-screen">
+      <div class="control-buttons">
+        <div class="control-buttons__container">
+          <button class="control-btn control-buttons__left">
+            <img src="../assets/images/left-arrow.svg" alt="">
+          </button>
+          <button class="control-btn control-buttons__right">
+            <img src="../assets/images/right-arrow.svg" alt="">
+          </button>
+        </div>
+      </div>
       <div class="top-content">
         <div class="top-content-container">
+          <router-link to="/" class="top-content__button-back">
+            Назад
+          </router-link>
           <div class="top-content__date">
             <div class="top-content__date-wrapper">
               <div class="top-content__date-img">
@@ -11,9 +24,6 @@
               <p>20.04.24 СБ, <span>{{ dayType }}</span></p>
             </div>
           </div>
-          <router-link to="/" class="top-content__button-back">
-            Назад
-          </router-link>
         </div>
       </div>
       <Table :getAbsClass="getAbsClass" :timeList="timeList"/>
@@ -23,6 +33,7 @@
 
 <script>
 import Table from "@/components/Table";
+import {mapActions} from "vuex";
 
 export default {
   components: {Table},
@@ -70,9 +81,18 @@ export default {
       ],
     }
   },
+  created() {
+    this.getHallsInfoHandler()
+  },
   computed: {
     getAbsClass() {
       return true
+    }
+  },
+  methods: {
+    ...mapActions(["getHallsInfo"]),
+    getHallsInfoHandler() {
+      this.getHallsInfo()
     }
   },
 }

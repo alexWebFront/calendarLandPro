@@ -1,10 +1,20 @@
 <template>
   <div class="page">
     <div class="main-screen">
+      <div class="control-buttons">
+        <div class="control-buttons__container">
+          <button class="control-btn control-buttons__left">
+            <img src="../assets/images/left-arrow.svg" alt="">
+          </button>
+          <button class="control-btn control-buttons__right">
+            <img src="../assets/images/right-arrow.svg" alt="">
+          </button>
+        </div>
+      </div>
       <div class="top-content">
         <div class="top-content-container">
           <div class="top-content-title">
-            <p class="top-content-text">Добро пожаловать в расписание Product Camp! </p>
+            <p class="top-content-text">Добро пожаловать в расписание {{ campInfo.name }} </p>
             <p class="top-content-text">Выберите нужный вам слот, нажав на него</p>
           </div>
         </div>
@@ -13,6 +23,7 @@
           :getAbsClass="getAbsClass"
           :headList="headList"
           :timeList="timeList"
+          :transformedArr="transformedArr"
       />
     </div>
   </div>
@@ -20,6 +31,7 @@
 
 <script>
 import Table from "@/components/Table";
+import moment from 'moment';
 import {mapActions, mapGetters} from "vuex";
 
 export default {
@@ -71,28 +83,48 @@ export default {
         {firstRange: '16:00'},
         {firstRange: '17:00'},
       ],
+      transformedArr: []
     }
   },
-
   created() {
     this.getCampInfoHandler()
+    this.getHallsInfoHandler()
+    this.getEventsInfoHandler()
   },
   computed: {
-    ...mapGetters(["campInfo"]),
+    ...mapGetters(["campInfo", "hallsInfo", "eventsInfo"]),
 
     getAbsClass() {
       return false
     },
   },
   methods: {
-    ...mapActions(["getCampInfo"]),
+    ...mapActions(["getCampInfo", "getHallsInfo", "getEventsInfo"]),
 
     getCampInfoHandler() {
       this.getCampInfo()
           .then(() => {
-            console.log(this.campInfo)
+            this.getTransformedArr()
           })
-    }
+    },
+    getHallsInfoHandler() {
+      this.getHallsInfo()
+    },
+    getEventsInfoHandler() {
+      this.getEventsInfo()
+    },
+    getTransformedArr() {
+      let newArr = []
+
+      for (let i = 0; i < this.campInfo.dates.length; i++) {
+        const date = new Date(this.campInfo.dates[i].date)
+
+        newArr.push({
+          date: moment(date).format('DD.MM.YY')
+        })
+      }
+      this.transformedArr = newArr
+    },
   },
 }
 </script>
