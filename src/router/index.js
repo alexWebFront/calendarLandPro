@@ -16,10 +16,12 @@ const routes = [
     component: SecondScreen
   },
   {
+    // path: '/details/:id',
     path: '/details',
     name: 'details',
     component: ThirdScreen
   },
+
 ]
 
 const router = createRouter({

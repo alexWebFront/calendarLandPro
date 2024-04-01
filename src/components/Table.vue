@@ -27,13 +27,14 @@
         <div class="table__item-column" v-for="i in 3"></div>
       </div>
     </div>
-    <div class="table__item" v-for="item in timeList">
-      <div class="table__item-time">{{ item.firstRange }}</div>
+    <div class="table__item" v-for="time in timeList">
+      <div class="table__item-time">{{ time.time }}</div>
       <div class="table__item-column-container">
         <div class="table__item-column" v-for="column in 3">
           <TableCard
-              :item="item"
+              :time="time"
               :column="column"
+
           />
         </div>
       </div>
@@ -43,16 +44,12 @@
 
 <script>
 import TableCard from "@/components/TableCard";
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   components: {TableCard},
   props: {
-    headList: {
-      type: Array,
-      default: []
-    },
-    timeList: {
+    eventsInfo: {
       type: Array,
       default: []
     },
@@ -67,29 +64,99 @@ export default {
     transformedArr: {
       type: Array,
       default: []
+    },
+    dates: {
+      type: Array,
+      default: []
     }
   },
   data() {
     return {
       title: "А/В тесты и рекламная монетизация",
       hallList: [],
+      timeList: [
+        {time: `08:00`, list: []},
+        {time: `09:00`, list: []},
+        {time: `10:00`, list: []},
+        {time: `11:15`, list: []},
+        {time: `11:30`, list: []},
+        {time: `11:55`, list: []},
+        {time: `12:00`, list: []},
+        {time: `13:00`, list: []},
+        {time: `14:00`, list: []},
+        {time: `15:00`, list: []},
+        {time: `16:00`, list: []},
+        {time: `17:00`, list: []},
+        {time: `18:00`, list: []},
+      ]
     }
   },
   created() {
-    // this.getTransformedArr()
-    // console.log(this.$route.path)
+    this.getEventsInfoHandler()
   },
   computed: {
-    ...mapGetters(["campInfo", "hallsInfo"]),
+    ...mapGetters(["campInfo", "hallsInfo", "eventsInfo"]),
 
     getTableHeadContent() {
       return this.$route.path === '/'
     },
 
-    getTableHeadArr() {
-      return this.$route.path === '/' ? this.headList : this.hallList
+  },
+  methods: {
+    ...mapActions(["getEventsInfo"]),
+    getEventsInfoHandler() {
+      this.getEventsInfo()
+          .then(() => {
+            // this.eventsInfo.forEach((event) => {
+            //   let hour = +(new Date(event.start).getHours()) <= 9 ? `0${new Date(event.start).getHours()}` : `${new Date(event.start).getHours()}`
+            //   this.timeList.push({
+            //     time: `${hour}:${new Date(event.start).getMinutes()}`,
+            //     list: []
+            //   })
+            // })
+            this.timeList.forEach((item) => {
+              item.list = this.dates
+            })
+
+            this.eventsInfo.forEach((event) => {
+              if (!this.checkDate(event)) {
+                return
+              }
+              this.timeList.forEach((item) => {
+
+                item.list.forEach((elem) => {
+                  let hour = +(new Date(event.start).getHours()) <= 9 ? `0${new Date(event.start).getHours()}` : `${new Date(event.start).getHours()}`
+                  console.log(`${hour}:${new Date(event.start).getMinutes()}`)
+                  console.log(`${item.time} item time`)
+                  if (item.time === `${hour}:${new Date(event.start).getMinutes()}`) {
+
+                    // const startDate = `${new Date(event.start).getFullYear()}${new Date(event.start).getMonth()}${new Date(event.start).getDate()}`
+                    // const finishDate = `${new Date(event.finish).getFullYear()}${new Date(event.finish).getMonth()}${new Date(event.finish).getDate()}`
+                    // const currentDate = `${new Date(elem.date).getFullYear()}${new Date(elem.date).getMonth()}${new Date(elem.date).getDate()}`
+                    // console.log(`${startDate}, ${currentDate}`)
+                    // if (startDate === currentDate) {
+                    //   elem = {...elem, ...event}
+                    // }
+                  }
+                })
+              })
+
+            })
+            console.log(this.timeList)
+          })
+    },
+    checkDate(event) {
+      let isChecked = false
+      this.dates.forEach((date) => {
+        const startDate = `${new Date(event.start).getFullYear()}${new Date(event.start).getMonth()}${new Date(event.start).getDate()}`
+        const finishDate = `${new Date(event.finish).getFullYear()}${new Date(event.finish).getMonth()}${new Date(event.finish).getDate()}`
+        const currentDate = `${new Date(date.date).getFullYear()}${new Date(date.date).getMonth()}${new Date(date.date).getDate()}`
+        if (startDate === currentDate || finishDate === currentDate) {
+          isChecked = true
+        }
+      })
+      return isChecked
     }
   },
-  methods: {},
 }
 </script>
