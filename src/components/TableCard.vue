@@ -25,7 +25,6 @@ export default {
 		if (this.column.start) {
 			console.log(this.column, "this.column");
 		}
-   
   },
   computed: {
     getCardLink() {

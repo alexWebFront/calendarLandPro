@@ -94,6 +94,8 @@ export default {
         { time: `11:55`, list: [] },
         { time: `12:00`, list: [] },
         { time: `12:15`, list: [] },
+				{ time: `12:17`, list: [] },
+				{ time: `12:17`, list: [] },
         { time: `12:30`, list: [] },
         { time: `13:00`, list: [] },
         { time: `14:00`, list: [] },
@@ -131,8 +133,12 @@ export default {
     },
     getEventsInfoHandler() {
       this.getEventsInfo().then(() => {
-        this.timeList.forEach((item) => {
-          item.list = this.dates;
+        this.timeList.forEach((item, i) => {
+          this.timeList[i].list = new Array();
+
+          this.dates.forEach((date) => {
+            this.timeList[i].list.push({ date: date.date });
+          });
         });
 
         this.timeList.forEach((item, index) => {
@@ -149,8 +155,6 @@ export default {
               return;
             }
 
-        
-						//Тут проблема - заполняет сразу во всех колонках
             this.timeList[index].list[i] = {
               ...elem,
               ...date,
