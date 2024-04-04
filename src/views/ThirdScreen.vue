@@ -3,56 +3,54 @@
     <div class="third-screen">
       <div class="top-content">
         <div class="top-content-container">
-          <router-link to="/halls" class="top-content__button-back">
+          <button class="top-content__button-back" @click="openSecondScreenHandler()">
             Назад
-          </router-link>
+          </button>
         </div>
       </div>
       <div class="third-screen__content">
         <div class="third-screen__container">
           <div class="third-screen__item">
             <div class="third-screen__img">
-              <img src="../assets/images/check.svg" alt="">
+              <img src="../assets/images/check.svg" alt="check" />
             </div>
-            <div class="third-screen__title third-screen__text">А/В тесты и рекламная монетизация</div>
+            <div class="third-screen__title third-screen__text">
+              {{ selectElement.name }}
+            </div>
           </div>
           <div class="third-screen__item">
             <div class="third-screen__img">
-              <img src="../assets/images/calendar.svg" alt="">
+              <img src="../assets/images/calendar.svg" alt="calendar" />
             </div>
-            <div class="third-screen__date third-screen__text">20.04.24 СБ, 14:30 - 14:40</div>
+            <div class="third-screen__date third-screen__text" v-if="getTimeInterval">
+              {{ selectElement.date.title }}, {{ getTimeInterval }}
+            </div>
+            <div class="third-screen__date third-screen__text" v-else>
+              -
+            </div>
           </div>
           <div class="third-screen__item">
             <div class="third-screen__img">
-              <img src="../assets/images/location.svg" alt="">
+              <img src="../assets/images/location.svg" alt="location" />
             </div>
-            <div class="third-screen__hall third-screen__text">Зал Ярославль</div>
+            <div class="third-screen__hall third-screen__text">
+              {{ selectElement.hallName }}
+            </div>
           </div>
           <div class="third-screen__item">
             <div class="third-screen__img">
-              <img src="../assets/images/speaker.svg" alt="">
+              <img src="../assets/images/speaker.svg" alt="speaker" />
             </div>
-            <div class="third-screen__speaker third-screen__text">Ижболдин Денис Валерьевич</div>
+            <div class="third-screen__speaker third-screen__text">
+              {{ getSpeakers }}
+            </div>
           </div>
           <div class="third-screen__item">
             <div class="third-screen__img">
-              <img src="../assets/images/notes.svg" alt="">
+              <img src="../assets/images/notes.svg" alt="notes" />
             </div>
             <div class="third-screen__description third-screen__text">
-              История развлечений для взрослых — монетизация и механики
-
-              - чем порно отличается от эротики?
-              - какие дейтинг приложения бывают по тематикам, например для геев?
-              - сколько заработал Тиндер и сколько у него скачиваний. На какой фиче он зарабатывает больше всего?
-              - какая посещаемость Порнхаба, как он зарабатывает и какая выручка у его владельца?
-              - какая посещаемость Вебкам сайтов, какие способы монетизации есть?
-              - в каком году появилась чат рулетка и как она зарабатывает?
-              - как порно драйвит экономику и как оно изменило технологии?
-              - в каких странах вас посадят за что — где запрещено снимать, смотреть, отправлять порно или секстинг?
-              - порно игрушки — это игрушка или нет?
-              - кто сделал первый секс шоп?
-
-              Вот так вот все интересно!
+              {{ selectElement.description }}
             </div>
           </div>
         </div>
@@ -62,20 +60,55 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
+import moment from "moment";
 
 export default {
-  created() {
-    this.getEventsInfoHandler()
+  props: {
+    selectElement: {
+      type: Object,
+      default: () => {},
+    },
   },
   computed: {
-    ...mapGetters(["eventsInfo"]),
+    /**
+     * Выводим список спикеров
+     *
+     * @returns {string} - спикеры
+     */
+    getSpeakers() {
+      const speakers = this.selectElement.speakers.map((speaker) => speaker.name);
+
+      return speakers.join(", ");
+    },
+
+    /**
+     * Получаем временный интервал в формате hh:mm - hh:mm
+     *
+     * @returns {string} - временный интервал
+     */
+    getTimeInterval() {
+			if (!new Date(this.selectElement.start).getTime()) {
+				return "";
+			}
+
+      const start = new Date(this.selectElement.start);
+      const finish = new Date(this.selectElement.finish);
+
+      const momentStart = moment(start).locale("ru").format("hh:mm");
+      const momentFinish = moment(finish).locale("ru").format("hh:mm");
+
+      return `${momentStart} - ${momentFinish}`;
+    },
   },
   methods: {
-    ...mapActions(['getEventsInfo']),
-    getEventsInfoHandler() {
-      this.getEventsInfo()
-    }
+    /**
+     * Переключаемся на второе окно
+     *
+     * @returns {void}
+     */
+    openSecondScreenHandler() {
+      this.$emit("openSecondScreenHandler");
+    },
   },
-}
+};
 </script>

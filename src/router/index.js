@@ -1,32 +1,18 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import MainScreen from '../views/MainScreen'
-import SecondScreen from "@/views/SecondScreen";
-import ThirdScreen from "@/views/ThirdScreen";
-
+import { createRouter, createWebHistory } from 'vue-router';
+import ScreenWrapper from '@/views/ScreenWrapper';
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: MainScreen
+    name: 'main',
+    component: ScreenWrapper,
   },
-  {
-    path: '/halls',
-    name: 'halls',
-    component: SecondScreen
-  },
-  {
-    // path: '/details/:id',
-    path: '/details',
-    name: 'details',
-    component: ThirdScreen
-  },
-
-]
+  { path: '/:pathMatch(.*)*', name: 'underfind', component: ScreenWrapper },
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

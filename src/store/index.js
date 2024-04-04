@@ -21,15 +21,21 @@ export default createStore({
     },
     setEventsInfo(state, value) {
       state.eventsInfo = value.map((item) => {
-				return {
-					...item,
-					finish: item.finish.replace("Z", "").replace("T", " "),
-					start: item.start.replace("Z", "").replace("T", " "),
-				}
-			});
+        return {
+          ...item,
+          finish: item.finish.replace('Z', '').replace('T', ' '),
+          start: item.start.replace('Z', '').replace('T', ' '),
+        };
+      });
     },
   },
   actions: {
+    /**
+     * Получаем информацию о расписании
+     * @param {commit} commit
+     *
+     * @returns {void}
+     */
     getCampInfo({ commit }) {
       return new Promise((resolve, reject) => {
         axios({
@@ -38,6 +44,7 @@ export default createStore({
         })
           .then(({ data }) => {
             commit('setCampInfo', data);
+
             resolve({
               data: data,
               status: true,
@@ -51,6 +58,13 @@ export default createStore({
           });
       });
     },
+
+    /**
+     * Получаем список залов
+     * @param {commit} commit
+     *
+     * @returns {void}
+     */
     getHallsInfo({ commit }) {
       return new Promise((resolve, reject) => {
         axios({
@@ -72,6 +86,13 @@ export default createStore({
           });
       });
     },
+
+    /**
+     * Получаем список элементов расписания
+     * @param {commit} commit
+     *
+     * @returns {void}
+     */
     getEventsInfo({ commit }) {
       return new Promise((resolve, reject) => {
         axios({

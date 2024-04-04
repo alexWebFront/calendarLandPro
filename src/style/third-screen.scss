@@ -1,9 +1,8 @@
 .third-screen-page {
-  padding-bottom: 450px !important;
+  padding-bottom: 50px !important;
 }
 
 .third-screen {
-
   .top-content__button-back {
     margin-left: auto;
   }
@@ -16,8 +15,6 @@
     max-width: 1320px;
     width: 100%;
     margin: 0 auto;
-    //height: 1720px;
-    //overflow: auto;
     border-radius: 15px;
     background: rgb(39, 39, 58);
     padding: 70px 55px;
@@ -25,10 +22,6 @@
 
   &__container {
     height: 100%;
-  }
-
-
-  &__content {
   }
 
   &__container {
@@ -63,18 +56,7 @@
     line-height: 53px;
   }
 
-  &__title {
-  }
-
-  &__date {
-  }
-
-  &__hall {
-  }
-
-  &__speaker {
-  }
-
-  &__description {
-  }
+	&__date {
+		text-transform: uppercase;
+	}
 }
