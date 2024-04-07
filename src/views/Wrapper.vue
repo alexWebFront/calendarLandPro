@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import MainScreen from "./MainScreen.vue";
-import SecondScreen from "./SecondScreen.vue";
-import ThirdScreen from "./ThirdScreen.vue";
+import MainScreen from "./Dates.vue";
+import SecondScreen from "./Halls.vue";
+import ThirdScreen from "./DetailsInfo.vue";
 export default {
   components: { MainScreen, SecondScreen, ThirdScreen },
   data() {

@@ -4,8 +4,8 @@
       <div class="table__head-container">
         <div class="table__head-item" v-for="(item, index) in headerList" :key="index">
           <div class="table__head-item-img">
-            <img v-if="item.date" src="../assets/images/calendar.svg" alt="calendar" />
-            <img v-if="item.name" src="../assets/images/hall.svg" alt="hall" />
+            <img v-if="item.date" src="./../assets/images/calendar.svg" alt="calendar" />
+            <img v-if="item.name" src="./../assets/images/hall.svg" alt="hall" />
           </div>
           <div v-if="item.date" class="table__head-item-text">{{ item.date.title }}</div>
           <div v-else class="table__head-item-text">{{ item.name }}</div>
@@ -19,11 +19,10 @@
       ]"
     >
       <button
-        class="table__absolute-hall"
+        class="table__absolute-hall table__absolute-hall--fill"
         v-for="item in getDatesHallsList"
         :key="item.id"
         v-show="item.roomId == i"
-				style="width: 100%;"
 				@click="selectElementHandlerBlankFieldList({}, item,)"
       >
 				<div class="table__absolute-hall-title-wrapper">

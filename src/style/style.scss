@@ -7,13 +7,6 @@
   @return (calc($target / $vwContext)) * 1vw;
 }
 
-@function customFunction() {
-  $customVar: var(--block-height);
-	$vwContext: (1400 * 0.01) * 1px;
-
-  @return calc(#{$customVar} / #{$vwContext} * 1vw);
-}
-
 // STYLES
 @import './table.scss';
 @import './second-screen.scss';
@@ -384,6 +377,15 @@ html {
 					.table__item-column {
 						height: auto;
 						min-height: get-vw(193px);
+
+						&:not(:last-child) {
+							&::after {
+								right: get-vw(-2.5px);
+								width: get-vw(3px);
+								bottom: get-vw(-18px);
+								height: get-vw(19px);
+							}
+						}
 					}
 
           .table__absolute-hall {
@@ -393,6 +395,11 @@ html {
             height: get-vw(65px);
             border-left: get-vw(10px) solid rgb(255, 193, 7);
             border-radius: get-vw(10px);
+
+						&--fill {
+							width: calc(100% - #{get-vw(128px)});
+							margin-left: get-vw(128px);
+						}
 
 						.table__absolute-hall-title-wrapper {
 							margin-right: get-vw(20px);
@@ -457,8 +464,6 @@ html {
       max-width: 380px;
       width: get-vw(380px);
 
-			//height: customFunction();
-
 			&--fill {
 				max-width: none;
 				width: calc(100% + #{get-vw(732px)});
@@ -476,6 +481,11 @@ html {
     &__card-day-type {
       font-size: get-vw(30px);
       line-height: get-vw(35px);
+
+			&--no-standard-height {
+				left: get-vw(30px);
+				max-width: calc(100% - #{get-vw(50px)});
+			}
     }
 
     &__card-day-des-wrapper {

@@ -2,7 +2,7 @@
   <div class="page">
     <div class="second-screen">
       <app-buttons
-        v-if="!showButtons"
+        v-if="showButtons"
         :list="hallsList"
         :activePage="activePage"
         @nextPageHandler="nextPage"
@@ -100,11 +100,11 @@ export default {
      * @returns {boolean} - показывать/не показывать
      */
     showButtons() {
-      return this.hallsInfo?.length >= 4;
+      return this.hallsList?.length >= 2;
     },
   },
   methods: {
-    ...mapActions(["getHallsInfo", "getEventsInfo"]),
+    ...mapActions(["getHallsInfo"]),
 
     /**
      * Устанавливаем список с часами
@@ -126,6 +126,10 @@ export default {
 
       if (this.selectElement.timeType.type == 3) {
         this.timeList = this.setHoursList(14, 18);
+      }
+
+      if (this.selectElement.timeType.type == 4) {
+        this.timeList = this.setHoursList(18, 24);
       }
     },
 
@@ -174,8 +178,11 @@ export default {
      */
     getHallsInfoHandler() {
       this.getHallsInfo().then(() => {
+				// Делим список дат на списки по 3 элемента
         this.setSortingHalls();
-        this.getEventsInfoHandler();
+
+				//Устанавливаем список элементов расписания
+        this.setScheduleItems();
       });
     },
 
@@ -215,17 +222,6 @@ export default {
     },
 
     /**
-     * Запрос на получение элементов расписания
-     *
-     * @returns {void}
-     */
-    getEventsInfoHandler() {
-      this.getEventsInfo().then(() => {
-        this.setScheduleItems();
-      });
-    },
-
-    /**
      * Устанавливаем список элементов расписания
      *
      * @returns {void}
@@ -238,7 +234,7 @@ export default {
       this.blankFieldList.datesHalls = [];
 
       this.eventsInfo.forEach((event) => {
-        const date = new Date(this.eventsInfo[0].start);
+        const date = new Date(event.start);
         const momentDate = moment(date).locale("ru").format("DD.MM.YY");
 
         if (!event.roomId && !event.start) {
@@ -255,8 +251,6 @@ export default {
 
         if (!event.roomId) {
           this.blankFieldList.halls.push(event);
-
-    
         }
 
         if (momentDate == this.selectElement.date.time) {
@@ -264,19 +258,30 @@ export default {
         }
       });
 
-			console.log(this.blankFieldList.halls, 'this.blankFieldList.halls')
-			console.log(array, 'array')
-
       this.timeList.forEach((item, i) => {
         this.timeList[i].list = new Array(...this.hallsList[this.activePage]);
       });
 
+      //Список для проверки на дублирующиеся элементы
+      let recurrenceCheckList = [];
+
       this.timeList.forEach((item, index) => {
         item.list.forEach((elem, i) => {
           let date = array.filter((event) => {
+            const momentDate = `${moment(event.start)
+              .locale("ru")
+              .format("YYYY-MM-DD")} ${item.time}:00`;
+
+            const isSuccessTime =
+              new Date(momentDate).getTime() < new Date(event.finish).getTime() &&
+              new Date(momentDate).getTime() >= new Date(event.start).getTime() &&
+              new Date(event.finish).getTime() - new Date(event.start).getTime() >=
+                900000;
+
             return (
-              item.time ==
-                `${this.getHour(event.start)}:${this.getMinutes(event.start)}` &&
+              (item.time ==
+                `${this.getHour(event.start)}:${this.getMinutes(event.start)}` ||
+                isSuccessTime) &&
               (event.roomId == elem.id || !event.roomId)
             );
           })[0];
@@ -285,15 +290,39 @@ export default {
             return;
           }
 
+          recurrenceCheckList.push(date);
+
+          let filterRecurrenceCheckList = recurrenceCheckList.filter(
+            (item) =>
+              item.start == date.start &&
+              item.finish == date.finish &&
+              item.roomId == date.roomId
+          );
+
+          //Если элемент уже добавлен в список то новый не добавляем
+          if (filterRecurrenceCheckList.length > 1) {
+            return;
+          }
+
+          let positionTop = 0;
+
+          //Если элемент расписания начинается в 11:07 а у нас разметка по 15 минут (08:15, 08:30) то делаем отступ сверху
+          if (
+            +this.getMinutes(date.start) >= 1 &&
+            +this.getMinutes(date.start) % 15 >= 1
+          ) {
+            let interest = 100 / (15 / +this.getMinutes(date.start));
+            positionTop = 193 * (interest / 100);
+          }
+
           this.timeList[index].list[i] = {
             ...elem,
             ...date,
             longTime: this.getLongTimeElement(date),
+            positionTop: positionTop,
           };
         });
       });
-
-			console.log(this.timeList, 'this.this.timeList')
     },
 
     /**
@@ -310,18 +339,23 @@ export default {
           item.time
         }:00`;
 
+        //Если дата попадает в промежуток от начала до конца элемента расписания до добавляем высоту элементу распивания
         if (
           new Date(momentDate).getTime() < new Date(date.finish).getTime() &&
           new Date(momentDate).getTime() >= new Date(date.start).getTime() &&
-					new Date(date.finish).getTime() - new Date(date.start).getTime() >= 900000
+          new Date(date.finish).getTime() - new Date(date.start).getTime() >= 900000
         ) {
           length += 1;
         }
       });
 
-			if (length == 0) {
-				return ((new Date(date.finish).getTime() - new Date(date.start).getTime()) / 60000) / 15
-			}
+      const residue = +moment(date.finish).locale("ru").format("mm") % 15;
+
+      if (length == 0 || residue > 0) {
+        return (
+          (new Date(date.finish).getTime() - new Date(date.start).getTime()) / 60000 / 15
+        );
+      }
 
       return length;
     },
@@ -345,6 +379,10 @@ export default {
      * @returns {string} - минуты нужной нам даты
      */
     getMinutes(time) {
+      if (new Date(time).getMinutes() == "0") {
+        return `${new Date(time).getMinutes()}0`;
+      }
+
       return new Date(time).getMinutes();
     },
 
@@ -360,17 +398,10 @@ export default {
       this.hallsList = chunkArr(this.hallsInfo, 3);
 
       this.hallsList.forEach((list) => {
-        if (list.length == 1) {
-          list.push({});
-          list.push({});
-
-          return;
-        }
-
-        if (list.length == 2) {
-          list.push({});
-
-          return;
+        for (let index = 0; index < 3; index++) {
+          if (!list[index]) {
+            list[index] = {};
+          }
         }
       });
     },

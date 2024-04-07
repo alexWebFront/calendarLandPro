@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import ScreenWrapper from '@/views/ScreenWrapper';
+import Wrapper from '@/views/Wrapper';
 
 const routes = [
   {
     path: '/',
     name: 'main',
-    component: ScreenWrapper,
+    component: Wrapper,
   },
-  { path: '/:pathMatch(.*)*', name: 'underfind', component: ScreenWrapper },
+  { path: '/:pathMatch(.*)*', name: 'underfund', component: Wrapper },
 ];
 
 const router = createRouter({
