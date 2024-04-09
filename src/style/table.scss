@@ -93,8 +93,8 @@
               content: '';
               position: absolute;
               right: -2.5px;
-							bottom: -18px;
-							height: 19px;
+              bottom: -18px;
+              height: 19px;
               background: rgb(255, 193, 7);
               width: 3px;
             }
@@ -113,10 +113,10 @@
           margin-left: auto;
           z-index: 2;
 
-					&--fill {
-						width: calc(100% - 128px);
-						margin-left: 128px;
-					}
+          &--fill {
+            width: calc(100% - 128px);
+            margin-left: 128px;
+          }
 
           &:not(:last-child) {
             margin-bottom: 3px;
@@ -187,11 +187,11 @@
 
   &__card {
     position: absolute;
-    max-width: 380px;
+    max-width: 360px;
     width: 100%;
     background: #27273a;
     top: 3px;
-    right: 17px;
+    right: 32px;
     z-index: 2;
     padding: 22px 32px;
     border-left: 10px solid rgb(255, 193, 7);
@@ -201,12 +201,83 @@
       max-width: none;
       width: calc(100% + 732px);
       right: auto;
-      left: 51px;
+      left: 55px;
+      background: #383855;
+      z-index: 0;
     }
+
+    &--half {
+      width: 222px;
+      right: 3px;
+      padding: 22px;
+
+			.table__card-day-des-wrapper {
+				display: none;
+			}
+    }
+
+		&--half-fill {
+			padding-left: 14px;
+			z-index: 0;
+
+			.table__card-wrapper {
+				text-wrap: balance !important;
+			}
+		}
   }
 
   &__card-wrapper {
     height: 100%;
+    &.medium {
+      max-width: 550px;
+      text-wrap: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+
+      .table__card-day-type {
+        max-width: 550px;
+        text-wrap: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+
+    &.small {
+      max-width: 220px;
+      text-wrap: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+
+      .table__card-day-type {
+        max-width: 220px;
+        text-wrap: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+
+		&.half {
+			max-width: 160px;
+      text-wrap: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+
+      .table__card-day-type {
+        max-width: 160px;
+        text-wrap: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+		}
+
+		&.fill-half {
+			max-width: 120px;
+			text-wrap: wrap;
+
+			.table__card-day-type {
+				max-width: 120px;
+			}
+		}
   }
 
   &__card-time-range {
@@ -223,16 +294,16 @@
     line-height: 35px;
     text-align: start;
 
-		&--no-standard-height {
-			position: absolute;
-			white-space: nowrap;
-			top: 50%;
-			left: 30px;
-			transform: translateY(-50%);
-			max-width: calc(100% - 50px);
-			overflow: hidden;
-			text-overflow: ellipsis;
-		}
+    &--no-standard-height {
+      position: absolute;
+      white-space: nowrap;
+      top: 50%;
+      left: 30px;
+      transform: translateY(-50%);
+      max-width: calc(100% - 50px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   &__card-time-range {

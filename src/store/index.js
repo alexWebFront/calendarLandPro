@@ -60,14 +60,14 @@ export default createStore({
       });
 
       //Пример элемента расписания
-			
-      //state.eventsInfo.push({
+
+			//state.eventsInfo.push({
       //  description: 'Тестовый элемент расписания',
-      //  start: '2023-08-19 10:10:00',
-      //  finish: '2023-08-19 10:50:00',
+      //  start: '2023-08-21 12:00:00',
+      //  finish: '2023-08-21 13:00:00',
       //  id: 'test',
       //  name: 'Тестовый элемент',
-      //  roomId: 3,
+      //  roomId: 1,
       //  speakers: [{ id: 1005, name: 'Тестовый спикер' }],
       //});
     },

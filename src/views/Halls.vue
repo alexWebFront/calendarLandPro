@@ -178,10 +178,10 @@ export default {
      */
     getHallsInfoHandler() {
       this.getHallsInfo().then(() => {
-				// Делим список дат на списки по 3 элемента
+        // Делим список дат на списки по 3 элемента
         this.setSortingHalls();
 
-				//Устанавливаем список элементов расписания
+        //Устанавливаем список элементов расписания
         this.setScheduleItems();
       });
     },
@@ -262,12 +262,19 @@ export default {
         this.timeList[i].list = new Array(...this.hallsList[this.activePage]);
       });
 
+      array.forEach((item) => {
+        if (!item.roomId && item.id) {
+          item.roomId = 1;
+          item.is_fill = true;
+        }
+      });
+
       //Список для проверки на дублирующиеся элементы
       let recurrenceCheckList = [];
 
       this.timeList.forEach((item, index) => {
         item.list.forEach((elem, i) => {
-          let date = array.filter((event) => {
+          let list = array.filter((event) => {
             const momentDate = `${moment(event.start)
               .locale("ru")
               .format("YYYY-MM-DD")} ${item.time}:00`;
@@ -284,14 +291,45 @@ export default {
                 isSuccessTime) &&
               (event.roomId == elem.id || !event.roomId)
             );
-          })[0];
+          });
 
-          if (!date) {
+          if (!list[0]) {
+            return;
+          }
+				
+					list = list.filter((element) => {
+						const momentDate = `${moment(element.start)
+              .locale("ru")
+              .format("YYYY-MM-DD")} ${item.time}:00`
+
+						return new Date(element.start).getTime() >= new Date(momentDate).getTime()
+					})
+
+					if (!list[0]) {
             return;
           }
 
-          recurrenceCheckList.push(date);
+          let doubleEvents = [];
+          let date = list.filter((item) => !item.is_fill)[0];
+          let fillElementsArray = list.filter((item) => item.is_fill);
+				
+          if (date) {
+            doubleEvents.push(date);
+          }
 
+          if (fillElementsArray[0]) {
+						if (list.filter((item) => !item.is_fill).length >= 2) {
+							date = list.filter((item) => !item.is_fill)[list.filter((item) => !item.is_fill).length - 1];
+							doubleEvents[0] = date;
+						}
+
+            date = fillElementsArray[0];
+
+            doubleEvents.push(fillElementsArray[0]);
+          }
+
+          recurrenceCheckList.push(date);
+			
           let filterRecurrenceCheckList = recurrenceCheckList.filter(
             (item) =>
               item.start == date.start &&
@@ -315,11 +353,21 @@ export default {
             positionTop = 193 * (interest / 100);
           }
 
+					doubleEvents = doubleEvents.map((doubleEvent) => {
+            return {
+              ...elem,
+              ...doubleEvent,
+              longTime: this.getLongTimeElement(doubleEvent),
+              positionTop: positionTop,
+            };
+          });
+
           this.timeList[index].list[i] = {
             ...elem,
             ...date,
             longTime: this.getLongTimeElement(date),
             positionTop: positionTop,
+            //list: doubleEvents,
           };
         });
       });

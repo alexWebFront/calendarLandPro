@@ -43,7 +43,7 @@
         </div>
       </div>
     </div>
-    <div class="table__item" v-for="time in timeList" :key="time.time">
+    <div class="table__item" v-for="(time, timeIndex) in timeList" :key="time.time">
       <div class="table__item-time">{{ time.time }}</div>
       <div class="table__item-column-container">
         <div
@@ -54,7 +54,22 @@
           <app-table-card
             :time="time.time"
 						:index="index"
+						:list="time.list"
             :column="column"
+						:timeList="timeList"
+						:timeIndex="timeIndex"
+            :headerItem="headerList[index]"
+            @selectElementHandler="selectElementHandler"
+          />
+          <app-table-card
+						v-if="column.list && column.list.length >= 2"
+            :time="time.time"
+						:index="index"
+						:list="time.list"
+            :column="column.list[0]"
+						:timeList="timeList"
+						:timeIndex="timeIndex"
+						isDoubleElement
             :headerItem="headerList[index]"
             @selectElementHandler="selectElementHandler"
           />

@@ -461,16 +461,70 @@ html {
     }
 
     &__card {
-      max-width: 380px;
-      width: get-vw(380px);
+      max-width: 360px;
+      width: get-vw(360px);
+			right: get-vw(32px);
 
 			&--fill {
 				max-width: none;
 				width: calc(100% + #{get-vw(732px)});
 				right: auto;
-				left: get-vw(44px);
+				left: get-vw(55px);
+			}
+
+			&--half {
+				width: get-vw(222px);
+				right: get-vw(3px);
+				padding-left: get-vw(22px);
+				padding-right: get-vw(22px);
+	
+				.table__card-day-des-wrapper {
+					display: none;
+				}
+			}
+
+			&--half-fill {
+				padding-left: get-vw(14px);
+
+				.table__card-wrapper {
+					text-wrap: balance !important;
+				}
 			}
     }
+
+		&__card-wrapper {
+			&.medium {
+				max-width: get-vw(550px);
+
+				.table__card-day-type {
+					max-width: get-vw(550px);
+				}
+			}
+
+			&.small {
+				max-width: get-vw(220px);
+
+				.table__card-day-type {
+					max-width: get-vw(220px);
+				}
+			}
+
+			&.half {
+				max-width: get-vw(160px);
+
+				.table__card-day-type {
+					max-width: get-vw(160px);
+				}
+			}
+
+			&.fill-half {
+				max-width: get-vw(120px);
+
+				.table__card-day-type {
+					max-width: get-vw(120px);
+				}
+			}
+		}
 
     &__card-time-range {
       font-size: get-vw(30px);

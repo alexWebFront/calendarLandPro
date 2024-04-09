@@ -3,14 +3,28 @@
     :class="[
       'table__card',
       {
-        'table__card--fill': !column.roomId && index == 0 && !column.timeType,
+        'table__card--fill': isFill,
+      },
+      {
+        'table__card--half': isDoubleElement || isHalf,
+      },
+			{
+        'table__card--half-fill': isDoubleElement || (column.list && column.list.length >= 2) || isAddedHalf,
       },
     ]"
     v-if="showCard"
     @click="selectElementHandler()"
     :style="`${blockStyleHeight}; ${blockTopPosition}`"
   >
-    <div class="table__card-wrapper">
+    <div
+      :class="[
+        'table__card-wrapper',
+        { half: isDoubleElement || isHalf },
+        { 'fill-half': (column.list && column.list.length >= 2) || isAddedHalf },
+        { small: isAddedClass(1) },
+        { medium: isAddedClass(2) },
+      ]"
+    >
       <template v-if="column.longTime >= 1 && blockHeight >= 90">
         <p
           class="table__card-time-range"
@@ -65,6 +79,22 @@ export default {
       type: Object,
       default: () => {},
     },
+    list: {
+      type: Array,
+      default: [],
+    },
+    timeList: {
+      type: Array,
+      default: [],
+    },
+    timeIndex: {
+      type: Number,
+      default: 0,
+    },
+    isDoubleElement: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -74,21 +104,114 @@ export default {
     };
   },
   created() {
-		//Устанавливаем высоту элемента расписания
+
+    //Устанавливаем высоту элемента расписания
     this.setBlockHeight();
 
-		//Устанавливаем отступ от начала блока с элементом расписания
+    //Устанавливаем отступ от начала блока с элементом расписания
     this.setBlockTopPosition();
 
     window.addEventListener("resize", () => {
-			//Устанавливаем высоту элемента расписания
+      //Устанавливаем высоту элемента расписания
       this.setBlockHeight();
 
-			//Устанавливаем отступ от начала блока с элементом расписания
+      //Устанавливаем отступ от начала блока с элементом расписания
       this.setBlockTopPosition();
     });
   },
   computed: {
+    /**
+     * Проверяем нужно добавить класс или нет если у элемента нету зала
+     *
+     * @returns {boolean}
+     */
+    isFill() {
+      return this.column.is_fill && this.index == 0 && !this.column.timeType;
+    },
+
+    /**
+     * Проверяем нужно добавить класс или нет если элемент пересекает другой
+     *
+     * @returns {boolean}
+     */
+    isHalf() {
+      if (this.column.timeType || this.index != 0 || this.column.is_fill) {
+        return false;
+      }
+
+			let list = this.timeList.filter((item, index) => this.timeIndex < index);
+
+
+      if (!list?.length) {
+        return false;
+      }
+
+      let arrayForFindIndex = [];
+
+      for (var i = 0; i < list.length; i++) {
+      	arrayForFindIndex = arrayForFindIndex.concat(list[i].list);
+      }
+
+      let index  = arrayForFindIndex.findIndex(el => el.is_fill);
+
+			if (index < 0) {
+				return false
+			}
+
+      if (index == 0) {
+      	index = 2;
+      } else {
+      	index = (index % 3) + 2;
+      }
+
+			return ((this.column.longTime + this.timeIndex) > index) 
+    },
+
+    /**
+     * Проверяем нужно добавить класс или нет если элемент пересекает другой
+     *
+     * @returns {boolean}
+     */
+    isAddedHalf() {
+      if (this.column.timeType || this.index != 0 || !this.column.is_fill) {
+        return false;
+      }
+
+      let list = this.timeList.filter((item, index) => this.timeIndex > index);
+
+			let data = list.filter((item, index) => item.list[0].longTime > this.timeIndex);
+
+      return !!data[0]
+    },
+
+    /**
+     * Проверяем нужно добавить класс или нет если элемент пересекает другой
+     * @param {number} id - порядковый номер в массиве
+     *
+     * @returns {boolean}
+     */
+    isAddedClass() {
+      return (id) => {
+        if (!this.isFill) {
+          return false;
+        }
+
+        let list = this.timeList.filter((item, index) => this.timeIndex > index);
+
+        if (!list?.length) {
+          return this.list[id]?.start;
+        }
+
+        let data = list.filter((item, index) => item.list[id].longTime > index);
+
+        if (data[0]) {
+          return true;
+        }
+
+        return !!this.list[id]?.start;
+      };
+    },
+
     /**
      * Получаем время в формате hh:mm
      * @param {string} time - время
