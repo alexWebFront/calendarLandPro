@@ -50,8 +50,9 @@
       <div class="table__card-day-des-wrapper" v-if="column.longTime >= 2">
         <p
           class="table__card-day-des"
-          v-for="speaker in column.speakers"
+          v-for="(speaker, speakerIndex) in column.speakers"
           :key="speaker.id"
+					v-show="speakerIndex <= 1"
         >
           {{ speaker.name }}
         </p>

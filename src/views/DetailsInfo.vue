@@ -12,7 +12,7 @@
         <div class="third-screen__container">
           <div class="third-screen__item">
             <div class="third-screen__img">
-              <img src="../assets/images/check.svg" alt="check" />
+              <img src="../assets/images/check.svg" class="third-screen__img-check" alt="check" />
             </div>
             <div class="third-screen__title third-screen__text">
               {{ selectElement.name }}
@@ -20,7 +20,7 @@
           </div>
           <div class="third-screen__item">
             <div class="third-screen__img">
-              <img src="../assets/images/calendar.svg" alt="calendar" />
+              <img src="../assets/images/calendar.svg" class="third-screen__img-calendar"  alt="calendar" />
             </div>
             <div class="third-screen__date third-screen__text" v-if="getTimeInterval">
               {{ selectElement.date.title }}, {{ getTimeInterval }}
@@ -31,7 +31,7 @@
           </div>
           <div class="third-screen__item">
             <div class="third-screen__img">
-              <img src="../assets/images/location.svg" alt="location" />
+              <img src="../assets/images/location.svg" class="third-screen__img-location" alt="location" />
             </div>
             <div class="third-screen__hall third-screen__text">
               {{ selectElement.hallName }}
@@ -39,7 +39,7 @@
           </div>
           <div class="third-screen__item">
             <div class="third-screen__img">
-              <img src="../assets/images/speaker.svg" alt="speaker" />
+              <img src="../assets/images/speaker.svg" class="third-screen__img-speaker" alt="speaker" />
             </div>
             <div class="third-screen__speaker third-screen__text">
               {{ getSpeakers }}
@@ -47,7 +47,7 @@
           </div>
           <div class="third-screen__item">
             <div class="third-screen__img">
-              <img src="../assets/images/notes.svg" alt="notes" />
+              <img src="../assets/images/notes.svg"  class="third-screen__img-notes" alt="notes" />
             </div>
             <div class="third-screen__description third-screen__text">
               {{ selectElement.description }}

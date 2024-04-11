@@ -1,76 +1,101 @@
 <template>
-  <main-screen v-if="isMainScreen" @openSecondScreenHandler="openSecondScreen" />
-  <second-screen
-    v-else-if="isSecondScreen"
+  <dates v-if="isDates" @openSecondScreenHandler="openHalls" @openErrorSchedulesHandler="openErrorSchedules"/>
+  <halls
+    v-else-if="isHalls"
     :selectElement="selectElement"
-    @openMainScreenHandler="openMainScreen"
-    @openThirdScreenHandler="openThirdScreen"
+    @openMainScreenHandler="openDates"
+    @openThirdScreenHandler="openDetailsInfo"
   />
-  <third-screen v-else-if="isThirdScreen" :selectElement="selectElement" @openSecondScreenHandler="openSecondScreen"/>
+  <details-info
+    v-else-if="isDetailsInfo"
+    :selectElement="selectElement"
+    @openSecondScreenHandler="openHalls"
+  />
+  <add-in-calendar v-else-if="isAddInCalendar" />
+	<error v-else-if="isError" :errorText="errorText"/>
 </template>
 
 <script>
-import MainScreen from "./Dates.vue";
-import SecondScreen from "./Halls.vue";
-import ThirdScreen from "./DetailsInfo.vue";
+import Dates from "./Dates.vue";
+import Halls from "./Halls.vue";
+import DetailsInfo from "./DetailsInfo.vue";
+import AddInCalendar from "./AddInCalendar.vue";
+import Error from './Error.vue';
 export default {
-  components: { MainScreen, SecondScreen, ThirdScreen },
+  components: { Dates, Halls, DetailsInfo, AddInCalendar, Error },
   data() {
     return {
       selectElement: {},
-      isMainScreen: true,
-      isSecondScreen: false,
-      isThirdScreen: false,
+      isDates: true,
+      isHalls: false,
+      isDetailsInfo: false,
+      isAddInCalendar: false,
+			isError: false,
+			errorText: "Текущее расписание еще не объявлено",
     };
   },
   methods: {
-		/**
+    /**
      * Открываем окно с датами
      *
      * @returns {void}
      */
-    openMainScreen() {
+    openDates() {
       window.scrollTo(0, 0);
-      this.isSecondScreen = false;
-      this.isThirdScreen = false;
-      this.isMainScreen = true;
+      this.isHalls = false;
+      this.isDetailsInfo = false;
+			this.isAddInCalendar = false;
+      this.isDates = true;
 
       this.selectElement = {};
     },
 
-		/**
+    /**
      * Открываем окно с залами
-		 * @param {object} element - данные о выбранном элементе расписания
+     * @param {object} element - данные о выбранном элементе расписания
      *
      * @returns {void}
      */
-    openSecondScreen(element = null) {
+    openHalls(element = null) {
       window.scrollTo(0, 0);
-      this.isMainScreen = false;
-      this.isThirdScreen = false;
-      this.isSecondScreen = true;
+      this.isDates = false;
+      this.isDetailsInfo = false;
+			this.isAddInCalendar = false;
+      this.isHalls = true;
 
-			if (!element) {
-				return
-			}
+      if (!element) {
+        return;
+      }
 
       this.selectElement = element;
     },
 
-		/**
+    /**
      * Открываем окно с детальной информацией о элементе расписания
-		 * @param {object} element - данные о выбранном элементе расписания
+     * @param {object} element - данные о выбранном элементе расписания
      *
      * @returns {void}
      */
-    openThirdScreen(element) {
+    openDetailsInfo(element) {
       window.scrollTo(0, 0);
-      this.isMainScreen = false;
-      this.isSecondScreen = false;
-      this.isThirdScreen = true;
+      this.isDates = false;
+      this.isHalls = false;
+			this.isAddInCalendar = false;
+      this.isDetailsInfo = true;
 
-			this.selectElement = {...this.selectElement, ...element};
+      this.selectElement = { ...this.selectElement, ...element };
     },
+
+		openErrorSchedules(text) {
+			this.errorText = text || this.errorText;
+
+			window.scrollTo(0, 0);
+      this.isDates = false;
+      this.isHalls = false;
+			this.isAddInCalendar = false;
+      this.isDetailsInfo = false;
+			this.isError = true;
+		},
   },
 };
 </script>

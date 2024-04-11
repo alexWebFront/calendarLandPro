@@ -54,20 +54,20 @@ export default createStore({
       state.eventsInfo = value.map((item) => {
         return {
           ...item,
-          finish: item.finish.replace('Z', '').replace('T', ' '),
-          start: item.start.replace('Z', '').replace('T', ' '),
+          finish: item.finish?.replace('Z', '').replace('T', ' '),
+          start: item.start?.replace('Z', '').replace('T', ' '),
         };
       });
 
       //Пример элемента расписания
 
 			//state.eventsInfo.push({
-      //  description: 'Тестовый элемент расписания',
+      //  description: 'Тестовый элемент расписания Тестовый элемент расписания Тестовый элемент расписания Тестовый элемент расписания',
       //  start: '2023-08-21 12:00:00',
-      //  finish: '2023-08-21 13:00:00',
+      //  finish: '2023-08-21 12:30:00',
       //  id: 'test',
-      //  name: 'Тестовый элемент',
-      //  roomId: 1,
+      //  name: 'Тестовый элемент Тестовый элемент расписания Тестовый элемент расписания Тестовый элемент расписания Тестовый элемент расписания Тестовый элемент расписания',
+      //  roomId: 3,
       //  speakers: [{ id: 1005, name: 'Тестовый спикер' }],
       //});
     },
@@ -84,6 +84,9 @@ export default createStore({
         axios({
           url: `https://demo.tst.landpro.site/camp.json`,
           method: 'GET',
+					headers: {
+            Authorization: `Bearer BjQtpUS0koW1Ixw4h9aSrTEDOu2PEjjysWzt6TGfpeJlZH3eX5lqrVtYbBgYZ2B8`
+          },
         })
           .then(({ data }) => {
             commit('setCampInfo', data);
@@ -96,7 +99,7 @@ export default createStore({
           .catch((err) => {
             reject({
               status: false,
-              msg: err,
+              data: err,
             });
           });
       });
@@ -113,6 +116,9 @@ export default createStore({
         axios({
           url: `https://demo.tst.landpro.site/rooms.json`,
           method: 'GET',
+					headers: {
+            Authorization: `Bearer BjQtpUS0koW1Ixw4h9aSrTEDOu2PEjjysWzt6TGfpeJlZH3eX5lqrVtYbBgYZ2B8`
+          },
         })
           .then(({ data }) => {
             commit('setHallsInfo', data);
@@ -125,7 +131,7 @@ export default createStore({
           .catch((err) => {
             reject({
               status: false,
-              msg: err,
+              data: err,
             });
           });
       });
@@ -142,6 +148,9 @@ export default createStore({
         axios({
           url: `https://demo.tst.landpro.site/events.json`,
           method: 'GET',
+					headers: {
+            Authorization: `Bearer BjQtpUS0koW1Ixw4h9aSrTEDOu2PEjjysWzt6TGfpeJlZH3eX5lqrVtYbBgYZ2B8`
+          },
         })
           .then(({ data }) => {
             commit('setEventsInfo', data);
@@ -154,7 +163,7 @@ export default createStore({
           .catch((err) => {
             reject({
               status: false,
-              msg: err,
+              data: err,
             });
           });
       });

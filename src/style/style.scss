@@ -15,7 +15,7 @@
 body,
 html {
   font-family: 'Roboto Condensed', sans-serif;
-	background: #181818;
+  background: #181818;
 }
 
 .page {
@@ -61,6 +61,7 @@ html {
         pointer-events: none;
       }
     }
+
     &--right {
       &.disabled {
         width: 60px;
@@ -116,16 +117,14 @@ html {
       display: flex;
       align-items: center;
       gap: 5px;
-
-      &:after {
-        content: url('../assets/images/finger.svg');
-        display: block;
-        max-width: 50px;
-        min-width: 50px;
-        max-height: 50px;
-        min-height: 50px;
-      }
     }
+  }
+}
+
+.top-content-text {
+  &__img {
+    width: 51px;
+    height: 50px;
   }
 }
 
@@ -163,7 +162,138 @@ html {
   }
 }
 
+.success {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+
+  &__wrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  &__text {
+    max-width: 800px;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    font-size: 50px;
+    font-weight: 400;
+    line-height: 82.03px;
+    text-align: left;
+    color: #ffffff;
+    border-left: 5px solid rgb(255, 193, 7);
+    padding-left: 60px;
+  }
+
+  &__exit {
+    position: fixed;
+    right: 20px;
+    top: 30px;
+    width: 160px;
+    height: 60px;
+    background: rgb(255, 193, 7);
+    color: #000000;
+    font-size: 35px;
+    font-weight: 400;
+    line-height: 52.73px;
+    border-radius: 15px;
+  }
+
+  &__buttons {
+    margin-top: 140px;
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    &--center {
+      justify-content: center;
+    }
+  }
+
+  &__button {
+    border-radius: 15px;
+    width: 260px;
+    height: 80px;
+    background: rgb(255, 193, 7);
+    font-size: 50px;
+    font-weight: 400;
+    line-height: 82.03px;
+  }
+}
+
+.third-screen__img-check {
+  width: 61px;
+  height: 51px;
+}
+
+.third-screen__img-calendar {
+  width: 60px;
+  height: 60px;
+}
+
+.third-screen__img-location {
+  width: 60px;
+  height: 50px;
+}
+
+.third-screen__img-speaker {
+  width: 61px;
+  height: 51px;
+}
+
+.third-screen__img-notes {
+  width: 60px;
+  height: 97px;
+}
+
 @media screen and (max-width: 1399px) {
+  .third-screen {
+    .top-content__button-back {
+      max-width: get-vw(200px);
+      height: get-vw(80px);
+      border-radius: get-vw(15px);
+      font-size: get-vw(45px);
+      line-height: get-vw(53px);
+    }
+  }
+
+	.top-content-text {
+		&__img {
+			width: get-vw(51px);
+			height: get-vw(50px);
+		}
+	}
+
+  .third-screen__img-check {
+    width: get-vw(61px);
+    height: get-vw(51px);
+  }
+
+  .third-screen__img-calendar {
+    width: get-vw(60px);
+    height: get-vw(60px);
+  }
+
+  .third-screen__img-location {
+    width: get-vw(60px);
+    height: get-vw(50px);
+  }
+
+  .third-screen__img-speaker {
+    width: get-vw(61px);
+    height: get-vw(51px);
+  }
+
+  .third-screen__img-notes {
+    width: get-vw(60px);
+    height: get-vw(97px);
+  }
+
   .page {
     max-width: 1400px;
     width: get-vw(1400px);
@@ -183,45 +313,45 @@ html {
       border-radius: get-vw(10px);
       gap: get-vw(24px);
       padding: 0 get-vw(5px);
-			gap: get-vw(10px);
+      gap: get-vw(10px);
     }
 
-		
-		&__button {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-	
-			&--left {
-				&.disabled {
-					width: get-vw(60px);
-					height: get-vw(50px);
-					background: #181818;
-					border-radius: 10px 0px 0px 10px;
-					pointer-events: none;
-				}
-			}
-			&--right {
-				&.disabled {
-					width: get-vw(60px);
-					height: get-vw(50px);
-					background: #181818;
-					border-radius: 0px 10px 10px 0px;
-					pointer-events: none;
-				}
-			}
-	
-			img {
-				width: get-vw(30px);
+    &__button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &--left {
+        &.disabled {
+          width: get-vw(60px);
+          height: get-vw(50px);
+          background: #181818;
+          border-radius: 10px 0px 0px 10px;
+          pointer-events: none;
+        }
+      }
+
+      &--right {
+        &.disabled {
+          width: get-vw(60px);
+          height: get-vw(50px);
+          background: #181818;
+          border-radius: 0px 10px 10px 0px;
+          pointer-events: none;
+        }
+      }
+
+      img {
+        width: get-vw(30px);
         height: get-vw(35px);
-			}
-		}
+      }
+    }
   }
 
   .top-content {
-    max-width: 925px;
+    max-width: get-vw(925px);
     width: get-vw(925px);
-    padding: get-vw(45px) 0 get-vw(66px) 0;
+    padding: #{get-vw(45px)} 0 #{get-vw(66px)} 0;
     height: get-vw(306px);
 
     &-container {
@@ -372,51 +502,51 @@ html {
         &.is-abs {
           min-height: get-vw(193px);
           height: auto;
-					max-height: 100%;
+          max-height: 100%;
 
-					.table__item-column {
-						height: auto;
-						min-height: get-vw(193px);
+          .table__item-column {
+            height: auto;
+            min-height: get-vw(193px);
 
-						&:not(:last-child) {
-							&::after {
-								right: get-vw(-2.5px);
-								width: get-vw(3px);
-								bottom: get-vw(-18px);
-								height: get-vw(19px);
-							}
-						}
-					}
+            &:not(:last-child) {
+              &::after {
+                right: get-vw(-2.5px);
+                width: get-vw(3px);
+                bottom: get-vw(-18px);
+                height: get-vw(19px);
+              }
+            }
+          }
 
           .table__absolute-hall {
-						display: block;
+            display: block;
             width: get-vw(400px);
             max-height: get-vw(65px);
             height: get-vw(65px);
             border-left: get-vw(10px) solid rgb(255, 193, 7);
             border-radius: get-vw(10px);
 
-						&--fill {
-							width: calc(100% - #{get-vw(128px)});
-							margin-left: get-vw(128px);
-						}
+            &--fill {
+              width: calc(100% - #{get-vw(128px)});
+              margin-left: get-vw(128px);
+            }
 
-						.table__absolute-hall-title-wrapper {
-							margin-right: get-vw(20px);
-							height: get-vw(65px);
-							display: flex;
-							align-items: center;
-							width: calc(100% - #{get-vw(60px)});
-							max-width: calc(100% - #{get-vw(40px)});
-							overflow: scroll;
-          		text-overflow: ellipsis;
-          		text-wrap: nowrap;
-						}
+            .table__absolute-hall-title-wrapper {
+              margin-right: get-vw(20px);
+              height: get-vw(65px);
+              display: flex;
+              align-items: center;
+              width: calc(100% - #{get-vw(60px)});
+              max-width: calc(100% - #{get-vw(40px)});
+              overflow: scroll;
+              text-overflow: ellipsis;
+              text-wrap: nowrap;
+            }
 
-						.table__absolute-hall-title {
-							max-width: 100%;
-							width: calc(100% - #{get-vw(40px)});
-						}
+            .table__absolute-hall-title {
+              max-width: 100%;
+              width: calc(100% - #{get-vw(40px)});
+            }
           }
         }
       }
@@ -463,68 +593,71 @@ html {
     &__card {
       max-width: 360px;
       width: get-vw(360px);
-			right: get-vw(32px);
+      right: get-vw(32px);
+      border-left: get-vw(10px) solid rgb(255, 193, 7);
+      padding: #{get-vw(16px)} #{get-vw(14px)};
+      border-radius: get-vw(10px);
 
-			&--fill {
-				max-width: none;
-				width: calc(100% + #{get-vw(732px)});
-				right: auto;
-				left: get-vw(55px);
-			}
+      &--fill {
+        max-width: none;
+        width: calc(100% + #{get-vw(732px)});
+        right: auto;
+        left: get-vw(55px);
+      }
 
-			&--half {
-				width: get-vw(222px);
-				right: get-vw(3px);
-				padding-left: get-vw(22px);
-				padding-right: get-vw(22px);
-	
-				.table__card-day-des-wrapper {
-					display: none;
-				}
-			}
+      &--half {
+        width: get-vw(222px);
+        right: get-vw(3px);
+        padding-left: get-vw(22px);
+        padding-right: get-vw(22px);
 
-			&--half-fill {
-				padding-left: get-vw(14px);
+        .table__card-day-des-wrapper {
+          display: none;
+        }
+      }
 
-				.table__card-wrapper {
-					text-wrap: balance !important;
-				}
-			}
+      &--half-fill {
+        padding-left: get-vw(14px);
+
+        .table__card-wrapper {
+          text-wrap: balance !important;
+        }
+      }
     }
 
-		&__card-wrapper {
-			&.medium {
-				max-width: get-vw(550px);
+    &__card-wrapper {
+      &.medium {
+        max-width: get-vw(550px);
 
-				.table__card-day-type {
-					max-width: get-vw(550px);
-				}
-			}
+        .table__card-day-type {
+          max-width: get-vw(550px);
+        }
+      }
 
-			&.small {
-				max-width: get-vw(220px);
+      &.small {
+        max-width: get-vw(220px);
 
-				.table__card-day-type {
-					max-width: get-vw(220px);
-				}
-			}
+        .table__card-day-type {
+          max-width: get-vw(220px);
+        }
+      }
 
-			&.half {
-				max-width: get-vw(160px);
+      &.half {
+        max-width: get-vw(160px);
 
-				.table__card-day-type {
-					max-width: get-vw(160px);
-				}
-			}
+        .table__card-day-type {
+          max-width: get-vw(160px);
+        }
+      }
 
-			&.fill-half {
-				max-width: get-vw(120px);
+      &.fill-half {
+        max-width: get-vw(120px);
 
-				.table__card-day-type {
-					max-width: get-vw(120px);
-				}
-			}
-		}
+        .table__card-day-type {
+          max-width: get-vw(120px);
+        }
+      }
+    }
 
     &__card-time-range {
       font-size: get-vw(30px);
@@ -536,10 +669,10 @@ html {
       font-size: get-vw(30px);
       line-height: get-vw(35px);
 
-			&--no-standard-height {
-				left: get-vw(30px);
-				max-width: calc(100% - #{get-vw(50px)});
-			}
+      &--no-standard-height {
+        left: get-vw(30px);
+        max-width: calc(100% - #{get-vw(50px)});
+      }
     }
 
     &__card-day-des-wrapper {
@@ -562,7 +695,7 @@ html {
     }
 
     .top-content-container {
-      padding: 0 get-vw(30px);
+      padding: 0 #{get-vw(30px)};
     }
 
     &__content {
@@ -587,11 +720,6 @@ html {
       max-height: 50px;
       height: get-vw(50px);
       min-height: auto;
-
-      img {
-        width: 100%;
-        height: 100%;
-      }
     }
 
     &__text {

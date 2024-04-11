@@ -3,10 +3,6 @@
 }
 
 .third-screen {
-  .top-content__button-back {
-    margin-left: auto;
-  }
-
   .top-content-container {
     padding: 0 30px;
   }
@@ -42,11 +38,6 @@
     min-width: 60px;
     max-height: 50px;
     min-height: 50px;
-
-    img {
-      width: 100%;
-      height: 100%;
-    }
   }
 
   &__text {

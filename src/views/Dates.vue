@@ -15,7 +15,14 @@
             <p class="top-content-text">
               Добро пожаловать в расписание {{ campInfo.name }}
             </p>
-            <p class="top-content-text">Выберите нужный вам слот, нажав на него</p>
+            <p class="top-content-text">
+              Выберите нужный вам слот, нажав на него
+              <img
+                src="../assets/images/finger.svg"
+                alt="finger"
+                class="top-content-text__img"
+              />
+            </p>
           </div>
         </div>
       </div>
@@ -132,7 +139,7 @@ export default {
         { time: `15:00`, list: [{}, {}, {}] },
         { time: `16:00`, list: [{}, {}, {}] },
         { time: `17:00`, list: [{}, {}, {}] },
-        { time: `18:00`, list: [] },
+        //{ time: `18:00`, list: [] },
       ],
     };
   },
@@ -194,13 +201,24 @@ export default {
      * @returns {void}
      */
     getCampInfoHandler() {
-      this.getCampInfo().then(() => {
-        //Переформатируем список дат в удобный нам
-        this.setDates();
+      this.getCampInfo()
+        .then(() => {
+          //Переформатируем список дат в удобный нам
+          this.setDates();
 
-        //Запрос на получение элементов расписания
-        this.getEventsInfoHandler();
-      });
+          //Запрос на получение элементов расписания
+          this.getEventsInfoHandler();
+
+          this.checkTimeList();
+        })
+        .catch((err) => {
+          this.$emit("openErrorSchedulesHandler", err?.data?.data?.message || "");
+        })
+        .finally(() => {
+          if (!Object.keys(this.campInfo).length) {
+            this.$emit("openErrorSchedulesHandler", "");
+          }
+        });
     },
 
     /**
@@ -416,7 +434,19 @@ export default {
       return new Date(time).getMinutes();
     },
 
-		/**
+    checkTimeList() {
+      for (let i = 0; i <= 2; i++) {
+        if (this.campInfo.dates.length <= i) {
+          this.timeList.forEach((item, index) => {
+            if (index >= 4 && index <= 9) {
+              item.list[i] = {};
+            }
+          });
+        }
+      }
+    },
+
+    /**
      * Устанавливаем первоначальное состояние списка
      *
      * @returns {void}
@@ -515,6 +545,8 @@ export default {
         { time: `17:00`, list: [{}, {}, {}] },
         { time: `18:00`, list: [] },
       ];
+
+      this.checkTimeList();
     },
   },
 };
