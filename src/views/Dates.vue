@@ -289,7 +289,7 @@ export default {
       this.dates[this.activePage].forEach((date, index) => {
         let dates = [];
 
-        this.eventsInfo.forEach((event) => {
+        this.eventsInfo.forEach((event, i) => {
           const dateStart = new Date(event.start);
 
           if (date.date?.time == moment(dateStart).locale("ru").format("DD.MM.YY")) {
@@ -307,8 +307,27 @@ export default {
           return new Date(b.finish).getTime() - new Date(a.finish).getTime();
         })[0];
 
-        list.push([start, finish]);
+				if (start || finish) {
+					list.push([start, finish]);
+				}
       });
+
+			let countHours = 0;
+
+			list.forEach((items) => {
+				if (this.getHour(items[0].start) < 8) {
+					if (countHours < 8 - this.getHour(items[0].start)) {
+						countHours = 8 - this.getHour(items[0].start);
+					}
+				}			
+			})
+			
+			for (let index = 1; index <= countHours; index++) {
+				this.timeList.unshift({
+          time: `0${8 - index}:00`,
+          list: [{}, {}, {}],
+        })
+			}
 
       let maxLongTimeArray = [];
 
@@ -376,7 +395,7 @@ export default {
 
           maxLongTimeArray.push(length);
 
-          this.timeList[10].list[items[1].index] = {
+          this.timeList[10 + countHours].list[items[1].index] = {
             finish: `${this.getHour(items[1].finish)}:${this.getMinutes(
               items[1].finish
             )}`,
@@ -391,8 +410,8 @@ export default {
           };
 
           for (let index = 0; index < 3; index++) {
-            if (!this.timeList[10].list[index]) {
-              this.timeList[10].list[index] = {};
+            if (!this.timeList[10 + countHours].list[index]) {
+              this.timeList[10 + countHours].list[index] = {};
             }
           }
         }

@@ -82,7 +82,8 @@ export default createStore({
     getCampInfo({ commit }) {
       return new Promise((resolve, reject) => {
         axios({
-          url: `https://demo.tst.landpro.site/camp.json`,
+          //url: `https://demo.tst.landpro.site/camp.json`,
+          url: `https://pcamp.tst.landpro.site/camp`,
           method: 'GET',
 					headers: {
             Authorization: `Bearer BjQtpUS0koW1Ixw4h9aSrTEDOu2PEjjysWzt6TGfpeJlZH3eX5lqrVtYbBgYZ2B8`
@@ -114,7 +115,8 @@ export default createStore({
     getHallsInfo({ commit }) {
       return new Promise((resolve, reject) => {
         axios({
-          url: `https://demo.tst.landpro.site/rooms.json`,
+          //url: `https://demo.tst.landpro.site/rooms.json`,
+          url: `https://pcamp.tst.landpro.site/halls`,
           method: 'GET',
 					headers: {
             Authorization: `Bearer BjQtpUS0koW1Ixw4h9aSrTEDOu2PEjjysWzt6TGfpeJlZH3eX5lqrVtYbBgYZ2B8`
@@ -146,7 +148,8 @@ export default createStore({
     getEventsInfo({ commit }) {
       return new Promise((resolve, reject) => {
         axios({
-          url: `https://demo.tst.landpro.site/events.json`,
+          //url: `https://demo.tst.landpro.site/events.json`,
+          url: `https://pcamp.tst.landpro.site/events`,
           method: 'GET',
 					headers: {
             Authorization: `Bearer BjQtpUS0koW1Ixw4h9aSrTEDOu2PEjjysWzt6TGfpeJlZH3eX5lqrVtYbBgYZ2B8`

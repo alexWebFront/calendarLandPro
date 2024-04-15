@@ -435,8 +435,7 @@ html {
     }
 
     &__head-container {
-      //width: 1334px;
-      //padding: 0 33px;
+			padding-left: get-vw(196px);
     }
 
     &__head-item {
@@ -444,21 +443,8 @@ html {
       width: get-vw(400px);
       gap: get-vw(22px);
 
-      &:first-child {
-        max-width: 602px;
-        width: get-vw(602px);
-      }
-
-      &:last-child {
-        padding-right: get-vw(33px);
-      }
-
       &:not(:first-child) {
         border-left: get-vw(3px) solid rgb(255, 193, 7);
-      }
-
-      &:not(:last-child) {
-        padding-right: get-vw(33px);
       }
     }
 
@@ -690,10 +676,6 @@ html {
   }
 
   .third-screen {
-    .top-content__button-back {
-      margin-left: auto;
-    }
-
     .top-content-container {
       padding: 0 #{get-vw(30px)};
     }

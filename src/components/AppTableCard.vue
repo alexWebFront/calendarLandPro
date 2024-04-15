@@ -8,8 +8,9 @@
       {
         'table__card--half': isDoubleElement || isHalf,
       },
-			{
-        'table__card--half-fill': isDoubleElement || (column.list && column.list.length >= 2) || isAddedHalf,
+      {
+        'table__card--half-fill':
+          isDoubleElement || (column.list && column.list.length >= 2) || isAddedHalf,
       },
     ]"
     v-if="showCard"
@@ -52,7 +53,7 @@
           class="table__card-day-des"
           v-for="(speaker, speakerIndex) in column.speakers"
           :key="speaker.id"
-					v-show="speakerIndex <= 1"
+          v-show="speakerIndex <= 1"
         >
           {{ speaker.name }}
         </p>
@@ -105,7 +106,6 @@ export default {
     };
   },
   created() {
-
     //Устанавливаем высоту элемента расписания
     this.setBlockHeight();
 
@@ -140,8 +140,7 @@ export default {
         return false;
       }
 
-			let list = this.timeList.filter((item, index) => this.timeIndex < index);
-
+      let list = this.timeList.filter((item, index) => this.timeIndex < index);
 
       if (!list?.length) {
         return false;
@@ -150,22 +149,22 @@ export default {
       let arrayForFindIndex = [];
 
       for (var i = 0; i < list.length; i++) {
-      	arrayForFindIndex = arrayForFindIndex.concat(list[i].list);
+        arrayForFindIndex = arrayForFindIndex.concat(list[i].list[0]);
       }
 
-      let index  = arrayForFindIndex.findIndex(el => el.is_fill);
+      let index = arrayForFindIndex.findIndex((el) => el.is_fill);
 
-			if (index < 0) {
-				return false
-			}
+      if (index < 0) {
+        return false;
+      }
 
       if (index == 0) {
-      	index = 2;
+        index = 2;
       } else {
-      	index = (index % 3) + 2;
+        index = (index % 3) + 2;
       }
 
-			return ((this.column.longTime + this.timeIndex) > index) 
+      return this.column.longTime > index;
     },
 
     /**
@@ -180,9 +179,9 @@ export default {
 
       let list = this.timeList.filter((item, index) => this.timeIndex > index);
 
-			let data = list.filter((item, index) => item.list[0].longTime > this.timeIndex);
+      let data = list.filter((item, index) => item.list[0].longTime > this.timeIndex);
 
-      return !!data[0]
+      return !!data[0];
     },
 
     /**

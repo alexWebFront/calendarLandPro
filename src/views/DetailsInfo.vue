@@ -49,8 +49,10 @@
             <div class="third-screen__img">
               <img src="../assets/images/notes.svg"  class="third-screen__img-notes" alt="notes" />
             </div>
-            <div class="third-screen__description third-screen__text">
-              {{ selectElement.description }}
+            <div v-if="selectElement.description" class="third-screen__description third-screen__text" v-html="selectElement.description">
+            </div>
+            <div v-else class="third-screen__description third-screen__text">
+							-
             </div>
           </div>
         </div>
@@ -78,6 +80,10 @@ export default {
     getSpeakers() {
       const speakers = this.selectElement.speakers.map((speaker) => speaker.name);
 
+			if (!speakers.length) {
+				return "-"
+			}
+
       return speakers.join(", ");
     },
 
@@ -94,8 +100,8 @@ export default {
       const start = new Date(this.selectElement.start);
       const finish = new Date(this.selectElement.finish);
 
-      const momentStart = moment(start).locale("ru").format("hh:mm");
-      const momentFinish = moment(finish).locale("ru").format("hh:mm");
+      const momentStart = `${this.getHour(start)}:${this.getMinutes(start)}`;
+      const momentFinish = `${this.getHour(finish)}:${this.getMinutes(finish)}`;
 
       return `${momentStart} - ${momentFinish}`;
     },
@@ -108,6 +114,32 @@ export default {
      */
     openSecondScreenHandler() {
       this.$emit("openSecondScreenHandler");
+    },
+
+		/**
+     * Получаем часы из даты
+     * @param {string} time - дата
+     *
+     * @returns {string} - часы нужной нам даты
+     */
+		 getHour(time) {
+      return new Date(time).getHours() <= 9
+        ? `0${new Date(time).getHours()}`
+        : `${new Date(time).getHours()}`;
+    },
+
+    /**
+     * Получаем минуты из даты
+     * @param {string} time - дата
+     *
+     * @returns {string} - минуты нужной нам даты
+     */
+    getMinutes(time) {
+      if (new Date(time).getMinutes() == "0") {
+        return `${new Date(time).getMinutes()}0`;
+      }
+
+      return new Date(time).getMinutes();
     },
   },
 };

@@ -1,8 +1,13 @@
 <template>
-  <dates v-if="isDates" @openSecondScreenHandler="openHalls" @openErrorSchedulesHandler="openErrorSchedules"/>
+  <dates
+    v-if="isDates"
+    @openSecondScreenHandler="openHalls"
+    @openErrorSchedulesHandler="openErrorSchedules"
+  />
   <halls
     v-else-if="isHalls"
     :selectElement="selectElement"
+    :countHours="countHours"
     @openMainScreenHandler="openDates"
     @openThirdScreenHandler="openDetailsInfo"
   />
@@ -12,7 +17,7 @@
     @openSecondScreenHandler="openHalls"
   />
   <add-in-calendar v-else-if="isAddInCalendar" />
-	<error v-else-if="isError" :errorText="errorText"/>
+  <error v-else-if="isError" :errorText="errorText" />
 </template>
 
 <script>
@@ -20,7 +25,7 @@ import Dates from "./Dates.vue";
 import Halls from "./Halls.vue";
 import DetailsInfo from "./DetailsInfo.vue";
 import AddInCalendar from "./AddInCalendar.vue";
-import Error from './Error.vue';
+import Error from "./Error.vue";
 export default {
   components: { Dates, Halls, DetailsInfo, AddInCalendar, Error },
   data() {
@@ -30,8 +35,8 @@ export default {
       isHalls: false,
       isDetailsInfo: false,
       isAddInCalendar: false,
-			isError: false,
-			errorText: "Текущее расписание еще не объявлено",
+      isError: false,
+      errorText: "Текущее расписание еще не объявлено",
     };
   },
   methods: {
@@ -44,7 +49,7 @@ export default {
       window.scrollTo(0, 0);
       this.isHalls = false;
       this.isDetailsInfo = false;
-			this.isAddInCalendar = false;
+      this.isAddInCalendar = false;
       this.isDates = true;
 
       this.selectElement = {};
@@ -60,7 +65,7 @@ export default {
       window.scrollTo(0, 0);
       this.isDates = false;
       this.isDetailsInfo = false;
-			this.isAddInCalendar = false;
+      this.isAddInCalendar = false;
       this.isHalls = true;
 
       if (!element) {
@@ -80,22 +85,22 @@ export default {
       window.scrollTo(0, 0);
       this.isDates = false;
       this.isHalls = false;
-			this.isAddInCalendar = false;
+      this.isAddInCalendar = false;
       this.isDetailsInfo = true;
 
       this.selectElement = { ...this.selectElement, ...element };
     },
 
-		openErrorSchedules(text) {
-			this.errorText = text || this.errorText;
+    openErrorSchedules(text) {
+      this.errorText = text || this.errorText;
 
-			window.scrollTo(0, 0);
+      window.scrollTo(0, 0);
       this.isDates = false;
       this.isHalls = false;
-			this.isAddInCalendar = false;
+      this.isAddInCalendar = false;
       this.isDetailsInfo = false;
-			this.isError = true;
-		},
+      this.isError = true;
+    },
   },
 };
 </script>

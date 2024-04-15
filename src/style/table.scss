@@ -10,6 +10,7 @@
     align-items: center;
     justify-content: space-between;
     height: 100%;
+		padding-left: 196px;
   }
 
   &__head-item {
@@ -18,22 +19,10 @@
     align-items: center;
     gap: 22px;
     height: 100%;
-    justify-content: flex-end;
-
-    &:first-child {
-      width: 602px;
-    }
-
-    &:last-child {
-      padding-right: 33px;
-    }
+    justify-content: center;
 
     &:not(:first-child) {
       border-left: 3px solid rgb(255, 193, 7);
-    }
-
-    &:not(:last-child) {
-      padding-right: 33px;
     }
   }
 
@@ -150,6 +139,7 @@
     display: flex;
     justify-content: flex-end;
     margin-top: -18px;
+		//z-index: 1;
   }
 
   &__item-column {
@@ -175,6 +165,7 @@
     display: flex;
     align-items: center;
     gap: 44px;
+		z-index: 0;
 
     &:after {
       content: '';
@@ -218,7 +209,7 @@
 
     &--half-fill {
       padding-left: 14px;
-      z-index: 0;
+      z-index: 1;
 
       .table__card-wrapper {
         text-wrap: balance !important;
@@ -264,7 +255,6 @@
 
       .table__card-day-type {
         max-width: 160px;
-        text-wrap: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
       }

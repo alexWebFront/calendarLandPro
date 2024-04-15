@@ -113,7 +113,26 @@ export default {
      */
     setTimeList() {
       if (this.selectElement.timeType.type == 1) {
-        this.timeList = this.setHoursList(8, 12);
+        let list = [];
+
+        this.eventsInfo.forEach((event) => {
+          const date = new Date(event.start);
+          const momentDate = moment(date).locale("ru").format("DD.MM.YY");
+
+          if (momentDate == this.selectElement.date.time) {
+            list.push(event);
+          }
+        });
+
+        const startElement = list
+          .sort((a, b) => {
+            return new Date(b.start).getTime() - new Date(a.start).getTime();
+          })
+          .reverse()[0];
+
+        let startHour = 8 - (8 - this.getHour(startElement.start));
+
+        this.timeList = this.setHoursList(startHour, 12);
 
         return;
       }
@@ -264,7 +283,7 @@ export default {
 
       array.forEach((item) => {
         if (!item.roomId && item.id) {
-          item.roomId = 1;
+          item.roomId = this.hallsList[this.activePage][0]?.id;
           item.is_fill = true;
         }
       });
@@ -296,32 +315,34 @@ export default {
           if (!list[0]) {
             return;
           }
-				
-					list = list.filter((element) => {
-						const momentDate = `${moment(element.start)
+
+          list = list.filter((element) => {
+            const momentDate = `${moment(element.start)
               .locale("ru")
-              .format("YYYY-MM-DD")} ${item.time}:00`
+              .format("YYYY-MM-DD")} ${item.time}:00`;
 
-						return new Date(element.start).getTime() >= new Date(momentDate).getTime()
-					})
+            return new Date(element.start).getTime() >= new Date(momentDate).getTime();
+          });
 
-					if (!list[0]) {
+          if (!list[0]) {
             return;
           }
 
           let doubleEvents = [];
           let date = list.filter((item) => !item.is_fill)[0];
           let fillElementsArray = list.filter((item) => item.is_fill);
-				
+
           if (date) {
             doubleEvents.push(date);
           }
 
           if (fillElementsArray[0]) {
-						if (list.filter((item) => !item.is_fill).length >= 2) {
-							date = list.filter((item) => !item.is_fill)[list.filter((item) => !item.is_fill).length - 1];
-							doubleEvents[0] = date;
-						}
+            if (list.filter((item) => !item.is_fill).length >= 2) {
+              date = list.filter((item) => !item.is_fill)[
+                list.filter((item) => !item.is_fill).length - 1
+              ];
+              doubleEvents[0] = date;
+            }
 
             date = fillElementsArray[0];
 
@@ -329,7 +350,7 @@ export default {
           }
 
           recurrenceCheckList.push(date);
-			
+
           let filterRecurrenceCheckList = recurrenceCheckList.filter(
             (item) =>
               item.start == date.start &&
@@ -353,7 +374,7 @@ export default {
             positionTop = 193 * (interest / 100);
           }
 
-					doubleEvents = doubleEvents.map((doubleEvent) => {
+          doubleEvents = doubleEvents.map((doubleEvent) => {
             return {
               ...elem,
               ...doubleEvent,
@@ -367,7 +388,7 @@ export default {
             ...date,
             longTime: this.getLongTimeElement(date),
             positionTop: positionTop,
-            //list: doubleEvents,
+            list: doubleEvents,
           };
         });
       });
