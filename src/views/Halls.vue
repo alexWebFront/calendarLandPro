@@ -112,23 +112,29 @@ export default {
      * @returns {void}
      */
     setTimeList() {
+      let list = [];
+
+      this.eventsInfo.forEach((event) => {
+        const date = new Date(event.start);
+        const momentDate = moment(date).locale("ru").format("DD.MM.YY");
+
+        if (momentDate == this.selectElement.date.time) {
+          list.push(event);
+        }
+      });
+
       if (this.selectElement.timeType.type == 1) {
-        let list = [];
-
-        this.eventsInfo.forEach((event) => {
-          const date = new Date(event.start);
-          const momentDate = moment(date).locale("ru").format("DD.MM.YY");
-
-          if (momentDate == this.selectElement.date.time) {
-            list.push(event);
-          }
-        });
-
         const startElement = list
           .sort((a, b) => {
             return new Date(b.start).getTime() - new Date(a.start).getTime();
           })
           .reverse()[0];
+
+        if (!startElement) {
+          this.timeList = this.setHoursList(8, 12);
+
+          return;
+        }
 
         let startHour = 8 - (8 - this.getHour(startElement.start));
 
@@ -148,7 +154,22 @@ export default {
       }
 
       if (this.selectElement.timeType.type == 4) {
-        this.timeList = this.setHoursList(18, 24);
+        const finishElement = list.sort((a, b) => {
+          return new Date(b.finish).getTime() - new Date(a.finish).getTime();
+        })[0];
+
+        if (!finishElement) {
+          this.timeList = this.setHoursList(18, 24);
+
+          return;
+        }
+
+        let finish =
+          +this.getHour(finishElement.finish) > 18
+            ? +this.getHour(finishElement.finish) + 1
+            : 24;
+
+        this.timeList = this.setHoursList(18, finish);
       }
     },
 

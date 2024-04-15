@@ -594,8 +594,10 @@ html {
       &--half {
         width: get-vw(222px);
         right: get-vw(3px);
-        padding-left: get-vw(22px);
-        padding-right: get-vw(22px);
+        padding-left: get-vw(14px);
+        padding-right: get-vw(14px);
+        padding-top: get-vw(14px);
+        padding-bottom: get-vw(14px);
 
         .table__card-day-des-wrapper {
           display: none;
