@@ -150,6 +150,7 @@ export default {
 					start: item.start,
 					finish: item.finish,
 					hallName: headerItem?.name || "-",
+					isFill: item.is_fill,
 				});
       }
     },

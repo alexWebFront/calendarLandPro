@@ -306,6 +306,7 @@ export default {
           start: this.column.start,
           finish: this.column.finish,
           hallName: this.headerItem.name,
+					isFill: this.column.is_fill,
         });
       }
     },

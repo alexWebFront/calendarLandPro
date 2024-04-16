@@ -33,8 +33,11 @@
             <div class="third-screen__img">
               <img src="../assets/images/location.svg" class="third-screen__img-location" alt="location" />
             </div>
-            <div class="third-screen__hall third-screen__text">
+            <div class="third-screen__hall third-screen__text" v-if="selectElement.hallName && !selectElement.isFill">
               {{ selectElement.hallName }}
+            </div>
+            <div class="third-screen__hall third-screen__text" v-else>
+              -
             </div>
           </div>
           <div class="third-screen__item">
