@@ -35,7 +35,7 @@
             class="table__absolute-hall"
             v-for="item in getDatesList"
             :key="item.id"
-            v-show="item.roomId == i"
+            v-show="item.roomId == headerList[i - 1].id"
 						@click="selectElementHandlerBlankFieldList(headerList[i - 1], item)"
           >
             <div class="table__absolute-hall-title">{{ item.name }}</div>

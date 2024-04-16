@@ -51,13 +51,14 @@ export default createStore({
       //];
     },
     setEventsInfo(state, value) {
-      state.eventsInfo = value.map((item) => {
-        return {
-          ...item,
-          finish: item.finish?.replace('Z', '').replace('T', ' '),
-          start: item.start?.replace('Z', '').replace('T', ' '),
-        };
-      });
+			state.eventsInfo = value;
+      //state.eventsInfo = value.map((item) => {
+      //  return {
+      //    ...item,
+      //    finish: item.finish?.replace('Z', '').replace('T', ' '),
+      //    start: item.start?.replace('Z', '').replace('T', ' '),
+      //  };
+      //});
 
       //Пример элемента расписания
 
