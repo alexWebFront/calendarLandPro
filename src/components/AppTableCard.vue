@@ -42,7 +42,7 @@
           'table__card-day-type',
           {
             'table__card-day-type--no-standard-height':
-              column.longTime <= 0.6 || blockHeight <= 89,
+              column.longTime <= 1.5 || blockHeight <= 300,
           },
         ]"
       >
@@ -51,7 +51,7 @@
       <div
         class="table__card-day-des-wrapper"
         v-if="
-          (column.longTime >= 2 || blockHeight <= 365) &&
+          (column.longTime >= 2 || blockHeight >= 365) &&
           column.speakers &&
           column.speakers.length
         "
@@ -279,21 +279,23 @@ export default {
      */
     setBlockHeight() {
       let maxHeight = (this.timeList.length - this.timeIndex) * 193;
+      let height = this.column.longTime * 193 - 20 - (this.column.positionTop || 0);
 
-      this.blockHeight = this.column.longTime * 193 - 20 - (this.column.positionTop || 0);
+      this.blockHeight = height > maxHeight ? maxHeight : height;
 
       if (window.innerWidth >= 1400) {
-        let height = this.column.longTime * 193 - 20 - (this.column.positionTop || 0);
+        height = this.column.longTime * 193 - 20 - (this.column.positionTop || 0);
 
         this.blockStyleHeight = `height: ${height > maxHeight ? maxHeight : height}px`;
 
         return;
       }
 
-      let height =
-        (this.column.longTime * 193 - 20 - (this.column.positionTop || 0)) / 14;
+      height = (this.column.longTime * 193 - 20 - (this.column.positionTop || 0)) / 14;
 
-      this.blockStyleHeight = `height: ${height > maxHeight ? maxHeight : height}vw`;
+      this.blockStyleHeight = `height: ${
+        height > maxHeight / 14 ? maxHeight / 14 : height
+      }vw`;
     },
 
     /**

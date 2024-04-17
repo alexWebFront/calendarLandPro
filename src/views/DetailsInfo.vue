@@ -12,7 +12,11 @@
         <div class="third-screen__container">
           <div class="third-screen__item">
             <div class="third-screen__img">
-              <img src="../assets/images/check.svg" class="third-screen__img-check" alt="check" />
+              <img
+                src="../assets/images/check.svg"
+                class="third-screen__img-check"
+                alt="check"
+              />
             </div>
             <div class="third-screen__title third-screen__text">
               {{ selectElement.name }}
@@ -20,29 +24,40 @@
           </div>
           <div class="third-screen__item">
             <div class="third-screen__img">
-              <img src="../assets/images/calendar.svg" class="third-screen__img-calendar"  alt="calendar" />
+              <img
+                src="../assets/images/calendar.svg"
+                class="third-screen__img-calendar"
+                alt="calendar"
+              />
             </div>
             <div class="third-screen__date third-screen__text" v-if="getTimeInterval">
               {{ selectElement.date.title }}, {{ getTimeInterval }}
             </div>
-            <div class="third-screen__date third-screen__text" v-else>
-              -
-            </div>
+            <div class="third-screen__date third-screen__text" v-else>-</div>
           </div>
           <div class="third-screen__item">
             <div class="third-screen__img">
-              <img src="../assets/images/location.svg" class="third-screen__img-location" alt="location" />
+              <img
+                src="../assets/images/location.svg"
+                class="third-screen__img-location"
+                alt="location"
+              />
             </div>
-            <div class="third-screen__hall third-screen__text" v-if="selectElement.hallName && !selectElement.isFill">
+            <div
+              class="third-screen__hall third-screen__text"
+              v-if="selectElement.hallName && !selectElement.isFill"
+            >
               {{ selectElement.hallName }}
             </div>
-            <div class="third-screen__hall third-screen__text" v-else>
-              -
-            </div>
+            <div class="third-screen__hall third-screen__text" v-else>-</div>
           </div>
           <div class="third-screen__item">
             <div class="third-screen__img">
-              <img src="../assets/images/speaker.svg" class="third-screen__img-speaker" alt="speaker" />
+              <img
+                src="../assets/images/speaker.svg"
+                class="third-screen__img-speaker"
+                alt="speaker"
+              />
             </div>
             <div class="third-screen__speaker third-screen__text">
               {{ getSpeakers }}
@@ -50,23 +65,43 @@
           </div>
           <div class="third-screen__item">
             <div class="third-screen__img">
-              <img src="../assets/images/notes.svg"  class="third-screen__img-notes" alt="notes" />
+              <img
+                src="../assets/images/notes.svg"
+                class="third-screen__img-notes"
+                alt="notes"
+              />
             </div>
-            <div v-if="selectElement.description" class="third-screen__description third-screen__text" v-html="selectElement.description">
-            </div>
-            <div v-else class="third-screen__description third-screen__text">
-							-
-            </div>
+            <div
+              v-if="selectElement.description"
+              class="third-screen__description third-screen__text"
+              v-html="selectElement.description"
+            ></div>
+            <div v-else class="third-screen__description third-screen__text">-</div>
           </div>
         </div>
+      </div>
+      <div class="third-screen__buttons">
+        <button class="third-screen__button" @click="addInCalendarHandler()">
+          <img
+            src="../assets/images/calendar.png"
+            class="third-screen__button-img"
+            alt="check"
+          />
+          Добавить в календарь
+        </button>
+        <button class="third-screen__button">
+          <img
+            src="../assets/images/like.png"
+            class="third-screen__button-img"
+            alt="check"
+          />Оставить отзыв
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import moment from "moment";
-
 export default {
   props: {
     selectElement: {
@@ -83,9 +118,9 @@ export default {
     getSpeakers() {
       const speakers = this.selectElement.speakers.map((speaker) => speaker.name);
 
-			if (!speakers.length) {
-				return "-"
-			}
+      if (!speakers.length) {
+        return "-";
+      }
 
       return speakers.join(", ");
     },
@@ -96,9 +131,9 @@ export default {
      * @returns {string} - временный интервал
      */
     getTimeInterval() {
-			if (!new Date(this.selectElement.start).getTime()) {
-				return "";
-			}
+      if (!new Date(this.selectElement.start).getTime()) {
+        return "";
+      }
 
       const start = new Date(this.selectElement.start);
       const finish = new Date(this.selectElement.finish);
@@ -110,6 +145,9 @@ export default {
     },
   },
   methods: {
+    addInCalendarHandler() {
+      this.$emit("addInCalendarHandler");
+    },
     /**
      * Переключаемся на второе окно
      *
@@ -119,13 +157,13 @@ export default {
       this.$emit("openSecondScreenHandler");
     },
 
-		/**
+    /**
      * Получаем часы из даты
      * @param {string} time - дата
      *
      * @returns {string} - часы нужной нам даты
      */
-		 getHour(time) {
+    getHour(time) {
       return new Date(time).getHours() <= 9
         ? `0${new Date(time).getHours()}`
         : `${new Date(time).getHours()}`;

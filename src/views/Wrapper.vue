@@ -15,8 +15,9 @@
     v-else-if="isDetailsInfo"
     :selectElement="selectElement"
     @openSecondScreenHandler="openHalls"
+		@addInCalendarHandler="addInCalendarHandler"
   />
-  <add-in-calendar v-else-if="isAddInCalendar" />
+  <add-in-calendar v-else-if="isAddInCalendar" :selectElement="selectElement" @setDetailWindowHandler="openDetailsInfo"/>
   <error v-else-if="isError" :errorText="errorText" />
 </template>
 
@@ -40,6 +41,15 @@ export default {
     };
   },
   methods: {
+		addInCalendarHandler() {
+			window.scrollTo(0, 0);
+			this.isDates = false;
+      this.isHalls = false;
+      this.isDetailsInfo = false;
+      this.isAddInCalendar = true;
+      
+		},
+
     /**
      * Открываем окно с датами
      *

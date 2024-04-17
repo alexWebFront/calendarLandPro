@@ -413,6 +413,58 @@ export default {
           };
         });
       });
+
+      this.timeList.forEach((item) => {
+        item.list.forEach((elem, i) => {
+          let date = array.filter((event) => {
+            const momentDate = `${moment(event.start)
+              .locale("ru")
+              .format("YYYY-MM-DD")} ${this.timeList[0].time}:00`;
+
+            return (
+              new Date(event.finish).getTime() >= new Date(momentDate).getTime() &&
+              new Date(event.start).getTime() < new Date(momentDate).getTime() &&
+              (event.roomId == elem.id || !event.roomId)
+            );
+          })[0];
+
+          if (!date) {
+            return;
+          }
+
+          if (this.timeList[0].list[i].start && this.timeList[0].list[i].id != elem.id) {
+            let doubleEvents = [
+              {
+                ...elem,
+                ...date,
+                longTime: this.getLongTimeElement(date),
+                positionTop: 0,
+              },
+              { ...this.timeList[0].list[i] },
+            ];
+
+						if (doubleEvents[0].id == doubleEvents[1].id) {
+							return
+						}
+
+            this.timeList[0].list[i] = {
+              ...this.timeList[0].list[i],
+              list: doubleEvents,
+            };
+
+            return;
+          }
+
+          if (!this.timeList[0].list[i].start) {
+            this.timeList[0].list[i] = {
+              ...elem,
+              ...date,
+              longTime: this.getLongTimeElement(date),
+              positionTop: 0,
+            };
+          }
+        });
+      });
     },
 
     /**

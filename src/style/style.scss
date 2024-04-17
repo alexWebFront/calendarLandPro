@@ -30,7 +30,7 @@ html {
 
 .control-buttons {
   position: absolute;
-  right: 43px;
+  left: 43px;
   top: 210px;
 
   &__container {
@@ -191,7 +191,7 @@ html {
 
   &__exit {
     position: fixed;
-    right: 20px;
+    left: 20px;
     top: 30px;
     width: 160px;
     height: 60px;
@@ -223,6 +223,7 @@ html {
     font-size: 50px;
     font-weight: 400;
     line-height: 82.03px;
+		color: #000000;
   }
 }
 
@@ -301,7 +302,7 @@ html {
   }
 
   .control-buttons {
-    right: get-vw(43px);
+    left: get-vw(43px);
     top: get-vw(210px);
 
     &__container {
@@ -678,6 +679,27 @@ html {
   }
 
   .third-screen {
+		&__buttons {
+			padding-top: get-vw(41px);
+			margin: 0 auto;
+			max-width: get-vw(1320px);
+		}
+		&__button {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: get-vw(45px);
+			font-size: get-vw(40px);
+			line-height: get-vw(46.88px);
+			width: get-vw(619px);
+			height: get-vw(100px);
+			border-radius: get-vw(15px);
+		}
+		&__button-img {
+			width: get-vw(60px);
+			height: get-vw(60px);
+		}
+
     .top-content-container {
       padding: 0 #{get-vw(30px)};
     }
@@ -711,5 +733,35 @@ html {
       font-weight: 400;
       line-height: get-vw(53px);
     }
+  }
+}
+
+
+.success {
+  &__input-wrapper {
+    max-width:  get-vw(1320px);
+    margin: 0 auto;
+  }
+  &__label {
+    font-size:  get-vw(70px);
+    line-height:  get-vw(82.03px);
+    padding-bottom:  get-vw(20px);
+  }
+  &__input {
+    height:  get-vw(152px);
+    margin-bottom:  get-vw(34px);
+		font-size:  get-vw(70px);
+		padding: 0 #{ get-vw(20px)};
+  }
+
+  &__buttons--fill {
+		margin-top: 0 !important;
+		width: 100%;
+		max-width:  get-vw(1320px) !important;
+
+		.success__button {
+			width: 100%;
+			height:  get-vw(120px);
+		}
   }
 }
