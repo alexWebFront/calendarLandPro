@@ -51,7 +51,7 @@ export default createStore({
       //];
     },
     setEventsInfo(state, value) {
-			state.eventsInfo = value;
+			//state.eventsInfo = value;
       //state.eventsInfo = value.map((item) => {
       //  return {
       //    ...item,
@@ -62,15 +62,17 @@ export default createStore({
 
       //Пример элемента расписания
 
-			//state.eventsInfo.push({
-      //  description: 'Тестовый элемент расписания Тестовый элемент расписания Тестовый элемент расписания Тестовый элемент расписания',
-      //  start: '2023-08-21 12:00:00',
-      //  finish: '2023-08-21 12:30:00',
-      //  id: 'test',
-      //  name: 'Тестовый элемент Тестовый элемент расписания Тестовый элемент расписания Тестовый элемент расписания Тестовый элемент расписания Тестовый элемент расписания',
-      //  roomId: 3,
-      //  speakers: [{ id: 1005, name: 'Тестовый спикер' }],
-      //});
+			state.eventsInfo.push({
+        description: 'Тестовый элемент расписания Тестовый элемент расписания Тестовый элемент расписания Тестовый элемент расписания',
+        start: '2024-04-20T08:30:00.000Z',
+        finish: '2024-04-20T09:00:00.000Z',
+        id: 'test',
+        name: 'Тестовый элемент Тестовый элемент расписания Тестовый элемент расписания Тестовый элемент расписания Тестовый элемент расписания Тестовый элемент расписания',
+        roomId: 1,
+        speakers: [{ id: 1005, name: 'Тестовый спикер' }, { id: 1006, name: 'Тестовый спикер' }],
+      });
+
+			//console.log(state.eventsInfo, 'state.eventsInfo')
     },
   },
   actions: {
@@ -84,7 +86,8 @@ export default createStore({
       return new Promise((resolve, reject) => {
         axios({
           //url: `https://demo.tst.landpro.site/camp.json`,
-          url: `https://pcamp.tst.landpro.site/camp`,
+          //url: `https://pcamp.tst.landpro.site/camp`,
+          url: `https://pcamp.public.landpro.site/camp`,
           method: 'GET',
 					headers: {
             Authorization: `Bearer BjQtpUS0koW1Ixw4h9aSrTEDOu2PEjjysWzt6TGfpeJlZH3eX5lqrVtYbBgYZ2B8`
@@ -117,7 +120,8 @@ export default createStore({
       return new Promise((resolve, reject) => {
         axios({
           //url: `https://demo.tst.landpro.site/rooms.json`,
-          url: `https://pcamp.tst.landpro.site/halls`,
+          //url: `https://pcamp.tst.landpro.site/halls`,
+					url: `https://pcamp.public.landpro.site/halls`,
           method: 'GET',
 					headers: {
             Authorization: `Bearer BjQtpUS0koW1Ixw4h9aSrTEDOu2PEjjysWzt6TGfpeJlZH3eX5lqrVtYbBgYZ2B8`
@@ -150,7 +154,8 @@ export default createStore({
       return new Promise((resolve, reject) => {
         axios({
           //url: `https://demo.tst.landpro.site/events.json`,
-          url: `https://pcamp.tst.landpro.site/events`,
+          //url: `https://pcamp.tst.landpro.site/events`,
+					url: `https://pcamp.public.landpro.site/events`,
           method: 'GET',
 					headers: {
             Authorization: `Bearer BjQtpUS0koW1Ixw4h9aSrTEDOu2PEjjysWzt6TGfpeJlZH3eX5lqrVtYbBgYZ2B8`

@@ -48,7 +48,14 @@
       >
         {{ column.name }}
       </p>
-      <div class="table__card-day-des-wrapper" v-if="column.longTime >= 2">
+      <div
+        class="table__card-day-des-wrapper"
+        v-if="
+          (column.longTime >= 2 || blockHeight <= 365) &&
+          column.speakers &&
+          column.speakers.length
+        "
+      >
         <p
           class="table__card-day-des"
           v-for="(speaker, speakerIndex) in column.speakers"
@@ -271,19 +278,22 @@ export default {
      * @returns {void}
      */
     setBlockHeight() {
-      this.blockHeight = this.column.longTime * 193 - 15 - (this.column.positionTop || 0);
+      let maxHeight = (this.timeList.length - this.timeIndex) * 193;
+
+      this.blockHeight = this.column.longTime * 193 - 20 - (this.column.positionTop || 0);
 
       if (window.innerWidth >= 1400) {
-        this.blockStyleHeight = `height: ${
-          this.column.longTime * 193 - 15 - (this.column.positionTop || 0)
-        }px`;
+        let height = this.column.longTime * 193 - 20 - (this.column.positionTop || 0);
+
+        this.blockStyleHeight = `height: ${height > maxHeight ? maxHeight : height}px`;
 
         return;
       }
 
-      this.blockStyleHeight = `height: ${
-        (this.column.longTime * 193 - 15 - (this.column.positionTop || 0)) / 14
-      }vw`;
+      let height =
+        (this.column.longTime * 193 - 20 - (this.column.positionTop || 0)) / 14;
+
+      this.blockStyleHeight = `height: ${height > maxHeight ? maxHeight : height}vw`;
     },
 
     /**
@@ -306,7 +316,7 @@ export default {
           start: this.column.start,
           finish: this.column.finish,
           hallName: this.headerItem.name,
-					isFill: this.column.is_fill,
+          isFill: this.column.is_fill,
         });
       }
     },

@@ -444,7 +444,7 @@ html {
       gap: get-vw(22px);
 
       &:not(:first-child) {
-        border-left: get-vw(3px) solid rgb(255, 193, 7);
+        border-left: get-vw(3px) solid #414141;
       }
     }
 
@@ -461,7 +461,7 @@ html {
     }
 
     &__head-item-text {
-      font-size: get-vw(40px);
+      font-size: get-vw(42px);
       line-height: get-vw(47px);
     }
 
@@ -539,7 +539,7 @@ html {
     }
 
     &__absolute-hall-title {
-      font-size: get-vw(30px);
+      font-size: get-vw(34px);
       line-height: get-vw(35px);
       margin-left: get-vw(32px);
     }
@@ -556,7 +556,7 @@ html {
       }
 
       &:not(:first-child) {
-        border-left: get-vw(3px) solid rgb(255, 193, 7);
+        border-left: get-vw(3px) solid #414141;
         max-width: 400px;
         width: get-vw(400px);
       }
@@ -648,14 +648,14 @@ html {
     }
 
     &__card-time-range {
-      font-size: get-vw(30px);
-      line-height: get-vw(35px);
+      font-size: get-vw(44px);
+      line-height: get-vw(46px);
       padding-bottom: get-vw(10px);
     }
 
     &__card-day-type {
-      font-size: get-vw(30px);
-      line-height: get-vw(35px);
+      font-size: get-vw(44px);
+      line-height: get-vw(46px);
 
       &--no-standard-height {
         left: get-vw(30px);
@@ -664,12 +664,12 @@ html {
     }
 
     &__card-day-des-wrapper {
-      padding-top: get-vw(28px);
+      padding-top: get-vw(16px);
     }
 
     &__card-day-des {
-      font-size: get-vw(30px);
-      line-height: get-vw(35px);
+      font-size: get-vw(44px);
+      line-height: get-vw(46px);
     }
   }
 
