@@ -223,7 +223,7 @@ html {
     font-size: 50px;
     font-weight: 400;
     line-height: 82.03px;
-		color: #000000;
+    color: #000000;
   }
 }
 
@@ -263,12 +263,12 @@ html {
     }
   }
 
-	.top-content-text {
-		&__img {
-			width: get-vw(51px);
-			height: get-vw(50px);
-		}
-	}
+  .top-content-text {
+    &__img {
+      width: get-vw(51px);
+      height: get-vw(50px);
+    }
+  }
 
   .third-screen__img-check {
     width: get-vw(61px);
@@ -436,7 +436,7 @@ html {
     }
 
     &__head-container {
-			padding-left: get-vw(196px);
+      padding-left: get-vw(196px);
     }
 
     &__head-item {
@@ -600,9 +600,9 @@ html {
         padding-top: get-vw(14px);
         padding-bottom: get-vw(14px);
 
-        .table__card-day-des-wrapper {
-          display: none;
-        }
+        //.table__card-day-des-wrapper {
+        //  display: none;
+        //}
       }
 
       &--half-fill {
@@ -616,18 +616,18 @@ html {
 
     &__card-wrapper {
       &.medium {
-        max-width: get-vw(550px);
+        max-width: get-vw(750px);
 
         .table__card-day-type {
-          max-width: get-vw(550px);
+          max-width: get-vw(750px);
         }
       }
 
       &.small {
-        max-width: get-vw(220px);
+        max-width: get-vw(360px);
 
         .table__card-day-type {
-          max-width: get-vw(220px);
+          max-width: get-vw(360px);
         }
       }
 
@@ -636,6 +636,8 @@ html {
 
         .table__card-day-type {
           max-width: get-vw(160px);
+          -webkit-line-clamp: 2;
+          line-clamp: 2;
         }
       }
 
@@ -644,6 +646,8 @@ html {
 
         .table__card-day-type {
           max-width: get-vw(120px);
+          -webkit-line-clamp: 2;
+          line-clamp: 2;
         }
       }
     }
@@ -679,26 +683,26 @@ html {
   }
 
   .third-screen {
-		&__buttons {
-			padding-top: get-vw(41px);
-			margin: 0 auto;
-			max-width: get-vw(1320px);
-		}
-		&__button {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			gap: get-vw(45px);
-			font-size: get-vw(40px);
-			line-height: get-vw(46.88px);
-			width: get-vw(619px);
-			height: get-vw(100px);
-			border-radius: get-vw(15px);
-		}
-		&__button-img {
-			width: get-vw(60px);
-			height: get-vw(60px);
-		}
+    &__buttons {
+      padding-top: get-vw(41px);
+      margin: 0 auto;
+      max-width: get-vw(1320px);
+    }
+    &__button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: get-vw(45px);
+      font-size: get-vw(40px);
+      line-height: get-vw(46.88px);
+      width: get-vw(619px);
+      height: get-vw(100px);
+      border-radius: get-vw(15px);
+    }
+    &__button-img {
+      width: get-vw(60px);
+      height: get-vw(60px);
+    }
 
     .top-content-container {
       padding: 0 #{get-vw(30px)};
@@ -734,34 +738,37 @@ html {
       line-height: get-vw(53px);
     }
   }
-}
 
+  .success {
+    &__input-wrapper {
+      max-width: get-vw(1320px);
+      margin: 0 auto;
+    }
+    &__error {
+      font-size: get-vw(55px);
+      color: red;
+      margin-bottom: get-vw(21px);
+    }
+    &__label {
+      font-size: get-vw(70px);
+      line-height: get-vw(82.03px);
+      padding-bottom: get-vw(20px);
+    }
+    &__input {
+      height: get-vw(152px);
+      font-size: get-vw(70px);
+      padding: 0 #{get-vw(20px)};
+    }
 
-.success {
-  &__input-wrapper {
-    max-width:  get-vw(1320px);
-    margin: 0 auto;
-  }
-  &__label {
-    font-size:  get-vw(70px);
-    line-height:  get-vw(82.03px);
-    padding-bottom:  get-vw(20px);
-  }
-  &__input {
-    height:  get-vw(152px);
-    margin-bottom:  get-vw(34px);
-		font-size:  get-vw(70px);
-		padding: 0 #{ get-vw(20px)};
-  }
+    &__buttons--fill {
+      width: 100%;
+      max-width: get-vw(1320px) !important;
+			margin-top: get-vw(34px);
 
-  &__buttons--fill {
-		margin-top: 0 !important;
-		width: 100%;
-		max-width:  get-vw(1320px) !important;
-
-		.success__button {
-			width: 100%;
-			height:  get-vw(120px);
-		}
+      .success__button {
+        width: 100%;
+        height: get-vw(120px);
+      }
+    }
   }
 }

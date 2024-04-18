@@ -15,9 +15,14 @@
     v-else-if="isDetailsInfo"
     :selectElement="selectElement"
     @openSecondScreenHandler="openHalls"
-		@addInCalendarHandler="addInCalendarHandler"
+    @openAddCalendarWindowHandler="openAddCalendarWindow"
   />
-  <add-in-calendar v-else-if="isAddInCalendar" :selectElement="selectElement" @setDetailWindowHandler="openDetailsInfo"/>
+  <add-in-calendar
+    v-else-if="isAddInCalendar"
+    :selectElement="selectElement"
+		:type="type"
+    @setDetailWindowHandler="openDetailsInfo"
+  />
   <error v-else-if="isError" :errorText="errorText" />
 </template>
 
@@ -38,17 +43,18 @@ export default {
       isAddInCalendar: false,
       isError: false,
       errorText: "Текущее расписание еще не объявлено",
+      type: "",
     };
   },
   methods: {
-		addInCalendarHandler() {
-			window.scrollTo(0, 0);
-			this.isDates = false;
+    openAddCalendarWindow(type) {
+      this.type = type;
+      window.scrollTo(0, 0);
+      this.isDates = false;
       this.isHalls = false;
       this.isDetailsInfo = false;
       this.isAddInCalendar = true;
-      
-		},
+    },
 
     /**
      * Открываем окно с датами

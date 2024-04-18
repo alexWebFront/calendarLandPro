@@ -209,7 +209,7 @@ export default {
           return this.list[id]?.start;
         }
 
-        let data = list.filter((item, index) => item.list[id].longTime > index);
+        let data = list.filter((item, index) => item.list[id].longTime > list.length);
 
         if (data[0]) {
           return true;
@@ -319,6 +319,7 @@ export default {
           finish: this.column.finish,
           hallName: this.headerItem.name,
           isFill: this.column.is_fill,
+					id: this.column.id,
         });
       }
     },

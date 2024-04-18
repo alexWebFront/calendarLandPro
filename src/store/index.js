@@ -51,7 +51,7 @@ export default createStore({
       //];
     },
     setEventsInfo(state, value) {
-			state.eventsInfo = value;
+      state.eventsInfo = value;
       //state.eventsInfo = value.map((item) => {
       //  return {
       //    ...item,
@@ -62,17 +62,16 @@ export default createStore({
 
       //Пример элемента расписания
 
-			//state.eventsInfo.push({
+      //state.eventsInfo.push({
       //  description: 'Тестовый элемент расписания Тестовый элемент расписания Тестовый элемент расписания Тестовый элемент расписания',
-      //  start: '2024-04-21T12:00:00.000Z',
-      //  finish: '2024-04-21T16:00:00.000Z',
+      //  start: '2024-04-20T12:00:00.000Z',
+      //  finish: '2024-04-20T14:30:00.000Z',
       //  id: 'test',
       //  name: 'Тестовый элемент Тестовый элемент расписания Тестовый элемент расписания Тестовый элемент расписания Тестовый элемент расписания Тестовый элемент расписания',
-      //  roomId: null,
+      //  roomId: 1,
       //  speakers: [{ id: 1005, name: 'Тестовый спикер' }, { id: 1006, name: 'Тестовый спикер' }],
       //});
-
-			//console.log(state.eventsInfo, 'state.eventsInfo')
+      //console.log(state.eventsInfo, 'state.eventsInfo')
     },
   },
   actions: {
@@ -89,8 +88,8 @@ export default createStore({
           //url: `https://pcamp.tst.landpro.site/camp`,
           url: `https://pcamp.public.landpro.site/camp`,
           method: 'GET',
-					headers: {
-            Authorization: `Bearer BjQtpUS0koW1Ixw4h9aSrTEDOu2PEjjysWzt6TGfpeJlZH3eX5lqrVtYbBgYZ2B8`
+          headers: {
+            Authorization: `Bearer BjQtpUS0koW1Ixw4h9aSrTEDOu2PEjjysWzt6TGfpeJlZH3eX5lqrVtYbBgYZ2B8`,
           },
         })
           .then(({ data }) => {
@@ -121,10 +120,10 @@ export default createStore({
         axios({
           //url: `https://demo.tst.landpro.site/rooms.json`,
           //url: `https://pcamp.tst.landpro.site/halls`,
-					url: `https://pcamp.public.landpro.site/halls`,
+          url: `https://pcamp.public.landpro.site/halls`,
           method: 'GET',
-					headers: {
-            Authorization: `Bearer BjQtpUS0koW1Ixw4h9aSrTEDOu2PEjjysWzt6TGfpeJlZH3eX5lqrVtYbBgYZ2B8`
+          headers: {
+            Authorization: `Bearer BjQtpUS0koW1Ixw4h9aSrTEDOu2PEjjysWzt6TGfpeJlZH3eX5lqrVtYbBgYZ2B8`,
           },
         })
           .then(({ data }) => {
@@ -155,15 +154,123 @@ export default createStore({
         axios({
           //url: `https://demo.tst.landpro.site/events.json`,
           //url: `https://pcamp.tst.landpro.site/events`,
-					url: `https://pcamp.public.landpro.site/events`,
+          url: `https://pcamp.public.landpro.site/events`,
           method: 'GET',
-					headers: {
-            Authorization: `Bearer BjQtpUS0koW1Ixw4h9aSrTEDOu2PEjjysWzt6TGfpeJlZH3eX5lqrVtYbBgYZ2B8`
+          headers: {
+            Authorization: `Bearer BjQtpUS0koW1Ixw4h9aSrTEDOu2PEjjysWzt6TGfpeJlZH3eX5lqrVtYbBgYZ2B8`,
           },
         })
           .then(({ data }) => {
             commit('setEventsInfo', data);
 
+            resolve({
+              data: data,
+              status: true,
+            });
+          })
+          .catch((err) => {
+            reject({
+              status: false,
+              data: err,
+            });
+          });
+      });
+    },
+
+    /**
+     * Проверка подписки пользователя
+     * @param {commit} commit
+     *
+     * @returns {void}
+     */
+    checkSubscribeUser({ commit }, payload) {
+      const { eventId, chatId } = payload;
+      return new Promise((resolve, reject) => {
+        axios({
+          url: `https://pcamp.tst.landpro.site/subscriptions/check`,
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer BjQtpUS0koW1Ixw4h9aSrTEDOu2PEjjysWzt6TGfpeJlZH3eX5lqrVtYbBgYZ2B8`,
+          },
+          params: {
+            eventId: eventId,
+            chatId: chatId,
+          },
+        })
+          .then(({ data }) => {
+            resolve({
+              data: data,
+              status: true,
+            });
+          })
+          .catch((err) => {
+            reject({
+              status: false,
+              data: err,
+            });
+          });
+      });
+    },
+
+		/**
+     * Создание подписки на событие
+     * @param {commit} commit
+     *
+     * @returns {void}
+     */
+    createSubscribeUser({ commit }, payload) {
+      const { eventId, chatId, email } = payload;
+      return new Promise((resolve, reject) => {
+        axios({
+          url: `https://pcamp.tst.landpro.site/subscriptions`,
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer BjQtpUS0koW1Ixw4h9aSrTEDOu2PEjjysWzt6TGfpeJlZH3eX5lqrVtYbBgYZ2B8`,
+          },
+          data: {
+            eventId: +eventId,
+            chatId: +chatId,
+						email: email,
+          },
+        })
+          .then(({ data }) => {
+            resolve({
+              data: data,
+              status: true,
+            });
+          })
+          .catch((err) => {
+            reject({
+              status: false,
+              data: err,
+            });
+          });
+      });
+    },
+
+    /**
+     * Обновление подписки
+     * @param {commit} commit
+     *
+     * @returns {void}
+     */
+    updateSubscribeUser({ commit }, payload) {
+      const { eventId, chatId, email, updateAnotherSubscriptions } = payload;
+      return new Promise((resolve, reject) => {
+        axios({
+          url: `https://pcamp.tst.landpro.site/subscriptions`,
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer BjQtpUS0koW1Ixw4h9aSrTEDOu2PEjjysWzt6TGfpeJlZH3eX5lqrVtYbBgYZ2B8`,
+          },
+          data: {
+            eventId: +eventId,
+            chatId: +chatId,
+						email: email,
+						updateAnotherSubscriptions: updateAnotherSubscriptions,
+          },
+        })
+          .then(({ data }) => {
             resolve({
               data: data,
               status: true,

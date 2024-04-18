@@ -202,9 +202,9 @@
       right: 3px;
       padding: 14px;
 
-      .table__card-day-des-wrapper {
-        display: none;
-      }
+      //.table__card-day-des-wrapper {
+      //  display: none;
+      //}
     }
 
     &--half-fill {
@@ -220,13 +220,13 @@
   &__card-wrapper {
     height: 100%;
     &.medium {
-      max-width: 550px;
+      max-width: 750px;
       text-wrap: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
 
       .table__card-day-type {
-        max-width: 550px;
+        max-width: 750px;
         text-wrap: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
@@ -234,14 +234,12 @@
     }
 
     &.small {
-      max-width: 220px;
-      text-wrap: nowrap;
+      max-width: 280px;
       text-overflow: ellipsis;
       overflow: hidden;
 
       .table__card-day-type {
-        max-width: 220px;
-        text-wrap: nowrap;
+        max-width: 280px;
         text-overflow: ellipsis;
         overflow: hidden;
       }
@@ -314,6 +312,15 @@
 
   &__card-day-des-wrapper {
     padding-top: 28px;
+		overflow: hidden;
+    text-overflow: ellipsis;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+    box-orient: vertical;
   }
 
   &__card-day-des {
@@ -373,17 +380,22 @@
     background: #27273a;
     width: 100%;
     height: 152px;
-    margin-bottom: 34px;
 		font-size: 70px;
     font-weight: 400;
 		color: #ffffff;
 		padding: 0 20px;
   }
 
+	&__error {
+		font-size: 55px;
+    color: red;
+    margin-bottom: 21px;
+	}
+
   &__buttons--fill {
-		margin-top: 0 !important;
 		width: 100%;
 		max-width: 1320px !important;
+		margin-top: 34px;
 
 		.success__button {
 			width: 100%;

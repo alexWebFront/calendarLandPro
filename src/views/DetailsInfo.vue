@@ -81,7 +81,7 @@
         </div>
       </div>
       <div class="third-screen__buttons">
-        <button class="third-screen__button" @click="addInCalendarHandler()">
+        <button class="third-screen__button" @click="openAddCalendarWindowHandler('add')">
           <img
             src="../assets/images/calendar.png"
             class="third-screen__button-img"
@@ -89,7 +89,7 @@
           />
           Добавить в календарь
         </button>
-        <button class="third-screen__button">
+        <button class="third-screen__button" @click="closeTelegramWebApp()">
           <img
             src="../assets/images/like.png"
             class="third-screen__button-img"
@@ -145,8 +145,13 @@ export default {
     },
   },
   methods: {
-    addInCalendarHandler() {
-      this.$emit("addInCalendarHandler");
+		closeTelegramWebApp() {
+			const tg = window.Telegram.WebApp;
+      tg.close();
+		},
+
+    openAddCalendarWindowHandler(type) {
+      this.$emit("openAddCalendarWindowHandler", type);
     },
     /**
      * Переключаемся на второе окно

@@ -2,7 +2,7 @@
   <div class="success">
     <div class="success__wrapper">
       <p class="success__text">
-        Событие "{{ selectElement.name }}" добавлено в календарь по почте {{ email }}!
+        {{ text }}
       </p>
 
       <div class="success__buttons success__buttons--center">
@@ -15,13 +15,9 @@
 <script>
 export default {
   props: {
-    email: {
+    text: {
       type: String,
       default: "",
-    },
-    selectElement: {
-      type: Object,
-      default: () => {},
     },
   },
   methods: {

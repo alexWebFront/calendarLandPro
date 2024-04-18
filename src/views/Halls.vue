@@ -414,6 +414,8 @@ export default {
         });
       });
 
+			this.timeList[this.timeList.length - 1] = {time: this.timeList[this.timeList.length - 1].time, list: [{}, {}, {}]}
+
       this.timeList.forEach((item) => {
         item.list.forEach((elem, i) => {
           let date = array.filter((event) => {
@@ -422,7 +424,7 @@ export default {
               .format("YYYY-MM-DD")} ${this.timeList[0].time}:00`;
 
             return (
-              new Date(event.finish).getTime() >= new Date(momentDate).getTime() &&
+              new Date(event.finish).getTime() > new Date(momentDate).getTime() &&
               new Date(event.start).getTime() < new Date(momentDate).getTime() &&
               (event.roomId == elem.id || !event.roomId)
             );
