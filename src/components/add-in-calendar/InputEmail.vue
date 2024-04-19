@@ -82,7 +82,7 @@ export default {
         }).then((resp) => {
             this.$emit(
               "openInfoWindowHandler",
-              `Событие "${this.name}" перенесено на почту ${this.email}!`
+              `Событие "${this.name}" перенесено на почту ${this.email}! <p class='success__text-small'>Обновление может прийти в течении нескольких часов</p>`
             );
          
         });
@@ -114,7 +114,7 @@ export default {
         if (!resp.data) {
           this.$emit(
             "openInfoWindowHandler",
-            `Событие "${this.name}" добавлено в календарь по почте ${this.email}!`
+            `Событие "${this.name}" добавлено в календарь по почте ${this.email}! <p class='success__text-small'>Приглашение может прийти в течении нескольких часов</p>`
           );
         }
       });

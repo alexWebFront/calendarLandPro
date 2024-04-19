@@ -284,5 +284,40 @@ export default createStore({
           });
       });
     },
+
+    /**
+     * Отзыв для пользователя
+     * @param {commit} commit
+     *
+     * @returns {void}
+     */
+    feedBackUser({ commit }, payload) {
+      const { eventId, chatId } = payload;
+      return new Promise((resolve, reject) => {
+        axios({
+          url: `https://pcamp.tst.landpro.site/feedback`,
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer BjQtpUS0koW1Ixw4h9aSrTEDOu2PEjjysWzt6TGfpeJlZH3eX5lqrVtYbBgYZ2B8`,
+          },
+          data: {
+            eventId: +eventId,
+            chatId: +chatId,
+          },
+        })
+          .then(({ data }) => {
+            resolve({
+              data: data,
+              status: true,
+            });
+          })
+          .catch((err) => {
+            reject({
+              status: false,
+              data: err,
+            });
+          });
+      });
+    },
   },
 });

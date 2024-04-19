@@ -65,9 +65,10 @@ export default {
       isHaveSubscribeWindow: false,
 
       text: "",
-      chatId: 0,
+      chatId: 1,
       email: "",
       response: {},
+			isOpenChoiceWindow: false,
     };
   },
   created() {
@@ -80,7 +81,7 @@ export default {
     setChatId() {
       const tg = window.Telegram.WebApp;
       tg.expand();
-      this.chatId = tg.initDataUnsafe?.user?.id;
+      //this.chatId = tg.initDataUnsafe?.user?.id;
     },
 
     setDetailWindowHandler() {
@@ -110,14 +111,16 @@ export default {
     },
 
     selectSuccess() {
-      if (this.response.lastUsedEmail && !this.response.isSubscriber) {
+      if (this.response.lastUsedEmail && !this.response.isSubscriber && this.isOpenChoiceWindow) {
+				this.isOpenChoiceWindow = false;
+
         this.createSubscribeUser({
           eventId: +this.selectElement.id,
           chatId: this.chatId,
           email: this.response.lastUsedEmail,
         }).then((resp) => {
           if (!resp.data) {
-            this.text = `Событие "${this.selectElement.name}" добавлено в календарь по почте ${this.response.lastUsedEmail}!`;
+            this.text = `Событие "${this.selectElement.name}" добавлено в календарь по почте ${this.response.lastUsedEmail}!<p class='success__text-small'>Приглашение может прийти в течении нескольких часов</p>`;
 
             this.isChoiceWindow = false;
             this.isInputWindow = false;
@@ -134,7 +137,7 @@ export default {
         email: this.email,
         updateAnotherSubscriptions: true,
       }).then((resp) => {
-        this.text = `Событие "${this.selectElement.name}" перенесено на почту ${this.email}!Остальные подписки обновлены`;
+        this.text = `Событие "${this.selectElement.name}" перенесено на почту ${this.email}!Остальные подписки обновлены <p class='success__text-small'>Обновление может прийти в течении нескольких часов</p>`;
 
         this.isChoiceWindow = false;
         this.isInputWindow = false;
@@ -145,7 +148,8 @@ export default {
     },
 
     selectError() {
-      if (this.response.lastUsedEmail && !this.response.isSubscriber) {
+      if (this.response.lastUsedEmail && !this.response.isSubscriber && this.isOpenChoiceWindow) {
+				this.isOpenChoiceWindow = false;
         this.openInputWindow();
 
         return;
@@ -157,7 +161,7 @@ export default {
         email: this.email,
         updateAnotherSubscriptions: false,
       }).then((resp) => {
-        this.text = `Событие "${this.selectElement.name}" перенесено на почту ${this.email}!`;
+        this.text = `Событие "${this.selectElement.name}" перенесено на почту ${this.email}!<p class='success__text-small'>Обновление может прийти в течении нескольких часов</p>`;
 
         this.isChoiceWindow = false;
         this.isInputWindow = false;
@@ -177,6 +181,7 @@ export default {
 
           if (resp.data.lastUsedEmail && !resp.data.isSubscriber) {
             this.text = `Вам выслать приглашение на этот адрес ${resp.data.lastUsedEmail}?`;
+						this.isOpenChoiceWindow = true;
 
             this.isChoiceWindow = true;
 

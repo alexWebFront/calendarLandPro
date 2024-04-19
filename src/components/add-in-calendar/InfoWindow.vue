@@ -1,8 +1,7 @@
 <template>
   <div class="success">
     <div class="success__wrapper">
-      <p class="success__text">
-        {{ text }}
+      <p class="success__text" v-html="text">
       </p>
 
       <div class="success__buttons success__buttons--center">

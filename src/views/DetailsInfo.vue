@@ -89,7 +89,7 @@
           />
           Добавить в календарь
         </button>
-        <button class="third-screen__button" @click="closeTelegramWebApp()">
+        <button class="third-screen__button" @click="feedBackUserHandler()">
           <img
             src="../assets/images/like.png"
             class="third-screen__button-img"
@@ -102,6 +102,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   props: {
     selectElement: {
@@ -145,10 +147,17 @@ export default {
     },
   },
   methods: {
-		closeTelegramWebApp() {
-			const tg = window.Telegram.WebApp;
-      tg.close();
-		},
+    ...mapActions(["feedBackUser"]),
+    feedBackUserHandler() {
+      const tg = window.Telegram.WebApp;
+
+      this.feedBackUser({
+        eventId: +this.selectElement.id,
+        chatId: tg.initDataUnsafe?.user?.id,
+      }).finally(() => {
+				tg.close();
+			});
+    },
 
     openAddCalendarWindowHandler(type) {
       this.$emit("openAddCalendarWindowHandler", type);

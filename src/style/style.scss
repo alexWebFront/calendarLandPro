@@ -180,6 +180,7 @@ html {
     height: 350px;
     display: flex;
     align-items: center;
+		justify-content: center;
     font-size: 50px;
     font-weight: 400;
     line-height: 82.03px;
@@ -187,7 +188,17 @@ html {
     color: #ffffff;
     border-left: 5px solid rgb(255, 193, 7);
     padding-left: 60px;
+		flex-direction: column;
+		position: relative;
   }
+
+	&__text-small {
+		font-size: 30px;
+		line-height: 24px;
+		position: absolute;
+		bottom: 0;
+		left: 60px;
+	}
 
   &__exit {
     position: fixed;
@@ -688,6 +699,7 @@ html {
       margin: 0 auto;
       max-width: get-vw(1320px);
     }
+
     &__button {
       display: flex;
       align-items: center;
@@ -699,6 +711,7 @@ html {
       height: get-vw(100px);
       border-radius: get-vw(15px);
     }
+
     &__button-img {
       width: get-vw(60px);
       height: get-vw(60px);
@@ -744,26 +757,58 @@ html {
       max-width: get-vw(1320px);
       margin: 0 auto;
     }
+
+    &__text {
+      max-width: get-vw(800px);
+      height: get-vw(350px);
+      display: flex;
+      font-size: get-vw(50px);
+      line-height: get-vw(82.03px);
+      border-left: #{get-vw(5px)} solid rgb(255, 193, 7);
+      padding-left: get-vw(60px);
+    }
+
+		&__text-small {
+			font-size: get-vw(30px);
+			line-height: get-vw(24px);
+			left: get-vw(60px);
+		}
+
+    &__button {
+      border-radius: get-vw(15px);
+      width: get-vw(260px);
+      height: get-vw(80px);
+      font-size: get-vw(50px);
+      line-height: get-vw(82.03px);
+    }
+
     &__error {
       font-size: get-vw(55px);
       color: red;
       margin-bottom: get-vw(21px);
     }
+
     &__label {
       font-size: get-vw(70px);
       line-height: get-vw(82.03px);
       padding-bottom: get-vw(20px);
     }
+
     &__input {
       height: get-vw(152px);
       font-size: get-vw(70px);
       padding: 0 #{get-vw(20px)};
     }
 
+    &__buttons {
+      margin-top: get-vw(140px);
+      max-width: get-vw(800px);
+    }
+
     &__buttons--fill {
       width: 100%;
       max-width: get-vw(1320px) !important;
-			margin-top: get-vw(34px);
+      margin-top: get-vw(34px);
 
       .success__button {
         width: 100%;
