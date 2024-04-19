@@ -342,13 +342,12 @@ export default {
               .locale("ru")
               .format("YYYY-MM-DD")} ${item.time}:00`;
 
-            return new Date(element.start).getTime() >= new Date(momentDate).getTime();
+            return new Date(element.start).getTime() >= new Date(momentDate).getTime() - 900000;
           });
 
           if (!list[0]) {
             return;
           }
-
           let doubleEvents = [];
           let date = list.filter((item) => !item.is_fill)[0];
           let fillElementsArray = list.filter((item) => item.is_fill);
@@ -392,6 +391,11 @@ export default {
             +this.getMinutes(date.start) % 15 >= 1
           ) {
             let interest = 100 / (15 / +this.getMinutes(date.start));
+
+						if (interest > 100) {
+							interest = 100 * (15 / +this.getMinutes(date.start));
+						}
+
             positionTop = 193 * (interest / 100);
           }
 

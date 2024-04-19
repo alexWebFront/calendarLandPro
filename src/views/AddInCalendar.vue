@@ -20,6 +20,7 @@
       :text="text"
       @selectSuccessHandler="selectSuccess"
       @selectErrorHandler="selectError"
+			@setDetailWindowHandler="setDetailWindowHandler"
     />
 
     <have-subscribe
@@ -65,7 +66,7 @@ export default {
       isHaveSubscribeWindow: false,
 
       text: "",
-      chatId: 1,
+      chatId: 0,
       email: "",
       response: {},
 			isOpenChoiceWindow: false,
@@ -81,7 +82,7 @@ export default {
     setChatId() {
       const tg = window.Telegram.WebApp;
       tg.expand();
-      //this.chatId = tg.initDataUnsafe?.user?.id;
+      this.chatId = tg.initDataUnsafe?.user?.id;
     },
 
     setDetailWindowHandler() {

@@ -177,7 +177,6 @@ html {
 
   &__text {
     max-width: 800px;
-    height: 350px;
     display: flex;
     align-items: center;
 		justify-content: center;
@@ -186,17 +185,25 @@ html {
     line-height: 82.03px;
     text-align: left;
     color: #ffffff;
-    border-left: 5px solid rgb(255, 193, 7);
     padding-left: 60px;
 		flex-direction: column;
 		position: relative;
+
+		&::before {
+			content: "";
+			position: absolute;
+			left: 0;
+			width: 5px;
+			height: 350px;
+			background: rgb(255, 193, 7);
+		}
   }
 
 	&__text-small {
 		font-size: 30px;
 		line-height: 24px;
 		position: absolute;
-		bottom: 0;
+		bottom: -45px;
 		left: 60px;
 	}
 
@@ -204,11 +211,11 @@ html {
     position: fixed;
     left: 20px;
     top: 30px;
-    width: 160px;
-    height: 60px;
+    width: 200px;
+    height: 80px;
     background: rgb(255, 193, 7);
     color: #000000;
-    font-size: 35px;
+    font-size: 45px;
     font-weight: 400;
     line-height: 52.73px;
     border-radius: 15px;
@@ -760,18 +767,27 @@ html {
 
     &__text {
       max-width: get-vw(800px);
-      height: get-vw(350px);
+      //height: get-vw(350px);
       display: flex;
       font-size: get-vw(50px);
       line-height: get-vw(82.03px);
-      border-left: #{get-vw(5px)} solid rgb(255, 193, 7);
+      //border-left: #{get-vw(5px)} solid rgb(255, 193, 7);
       padding-left: get-vw(60px);
+
+			&::before {
+				content: "";
+				position: absolute;
+				left: 0;
+				width: get-vw(5px);
+				height: get-vw(350px);
+			}
     }
 
 		&__text-small {
 			font-size: get-vw(30px);
 			line-height: get-vw(24px);
 			left: get-vw(60px);
+			bottom: get-vw(-45px);
 		}
 
     &__button {
@@ -781,6 +797,16 @@ html {
       font-size: get-vw(50px);
       line-height: get-vw(82.03px);
     }
+
+		&__exit {
+			left: get-vw(20px);
+			top: get-vw(30px);
+			width: get-vw(200px);
+			height: get-vw(80px);
+			font-size: get-vw(45px);
+			line-height: get-vw(52.73px);
+			border-radius: get-vw(15px);
+		}
 
     &__error {
       font-size: get-vw(55px);

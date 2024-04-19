@@ -2,7 +2,7 @@
   <div class="success">
 		<button class="success__exit"  @click="setDetailWindowHandler()">Выйти</button>
     <div class="success__wrapper">
-      <p class="success__text">{{ text }}</p>
+      <p class="success__text" v-html="text"></p>
 
       <div class="success__buttons">
         <button class="success__button" @click="selectSuccessHandler()">Да</button>
